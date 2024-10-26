@@ -1,0 +1,651 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lobby Tektõn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style/styleinicio2.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ffffff;
+            color: #0b1742;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding-top: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        .nav {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            background-color: #f4f4f4;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .nav button {
+            background-color: #ff9a00;
+            color: #ffffff;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            
+        }
+        .nav button i {
+            margin-right: 10px;
+        }
+        .nav button:hover {
+            background-color: #e88a00;
+            transform: translateY(-2px);
+        }
+        .nav button:active {
+            transform: translateY(2px);
+        }
+        .content {
+            width: 100%;
+            max-width: 1000px;
+            background-color: #f4f4f4;
+            padding: 30px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .footer {
+            background-color: #0b1742;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .plants-list {
+            list-style: none;
+            padding: 0;
+        }
+        .plants-list li {
+            background-color: #ffffff;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .plants-list li h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .plants-list li button {
+            background-color: #ff9a00;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .plants-list li button:hover {
+            background-color: #e88a00;
+            transform: translateY(-2px);
+        }
+        .plants-list li button:active {
+            transform: translateY(2px);
+        }
+        .progress-bar-container {
+            margin-top: 20px;
+        }
+        .progress-bar {
+            background-color: #ddd;
+            border-radius: 20px;
+            padding: 3px;
+        }
+        .progress-bar-fill {
+            background-color: #ff9a00;
+            height: 20px;
+            border-radius: 20px;
+            width: 50%; /* Example width, should be dynamic */
+            transition: width 0.3s;
+        }
+        .badge {
+            display: inline-block;
+            background-color: #ff9a00;
+            color: #ffffff;
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 10px 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .profile, .settings {
+            text-align: left;
+        }
+        .profile h2, .settings h2 {
+            border-bottom: 2px solid #ff9a00;
+            padding-bottom: 10px;
+        }
+        .profile p, .settings p {
+            margin: 10px 0;
+        }
+        .profile input, .settings input, .settings select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .profile button, .settings button {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            background-color: #0b1742;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .profile button:hover, .settings button:hover {
+            background-color: #0a1538;
+            transform: translateY(-2px);
+        }
+        .profile button:active, .settings button:active {
+            transform: translateY(2px);
+        }
+        .settings .option-group {
+            margin: 20px 0;
+        }
+        .settings .option-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+        .map-container {
+    margin-top: 30px;
+    width: 100%;
+    max-width: 1000px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative; /* Enable positioning for text overlay */
+}
+
+.map {
+    width: 100%;
+    height: 400px; /* Increased height for better visibility */
+}
+
+.map-info {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif; /* Font style */
+    color: #333;
+}
+
+.map-info h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+}
+
+.map-info ul {
+    padding-left: 20px; /* Indentation for list items */
+}
+
+.map-info button {
+    display: block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF; /* Button color */
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.map-info button:hover {
+    background-color: #ff9a00;
+    
+}
+
+.info-section {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: rgba(240, 240, 240, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: solid 1px #ff9a00;
+}
+
+.info-section h2 {
+    margin: 0 0 10px;
+    font-size: 22px;
+}
+
+.info-section p {
+    margin: 0;
+    font-size: 16px;
+}
+    </style>
+    <script>
+        let plantsVisible = false; // Track visibility state of the plants
+
+      
+        ocument.addEventListener('DOMContentLoaded', function() {
+            showWelcomeMessage(); // Exibe a mensagem de boas-vindas quando a página carrega
+        });
+
+        function showWelcomeMessage() {
+            document.getElementById('content').innerHTML = `
+                <div class="welcome-message">
+                    <h2>Bem-vindo ao Lobby Tektõn!</h2>
+                    <p>Selecione uma opção no menu acima para começar.</p>
+                </div>`;
+        }
+
+
+        function togglePlants() {
+            if (plantsVisible) {
+                // Clear content
+                document.getElementById('content').innerHTML = '';
+                plantsVisible = false;
+            } else {
+                // Show plants
+                showPlants();
+                plantsVisible = true;
+            }
+        }
+
+        // Function to display user's plants
+        function showPlants() {
+            document.getElementById('content').innerHTML = `
+                <h2>Minhas Plantas</h2>
+                <ul class="plants-list">
+                    <li>
+                        <h3>Planta 1</h3>
+                        <button>Visualizar</button>
+                    </li>
+                    <li>
+                        <h3>Planta 2</h3>
+                        <button>Visualizar</button>
+                    </li>
+                    <li>
+                        <h3>Planta 3</h3>
+                        <button>Visualizar</button>
+                    </li>
+                </ul>
+                <div class="progress-bar-container">
+                    <h3>Progresso do Projeto</h3>
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" style="width: 50%;"></div>
+                    </div>
+                </div>
+                <h3>Conquistas</h3>
+                <div class="badge">Primeira Planta Adquirida</div>
+                <div class="badge">Projeto Concluído</div>`
+                ;
+        }
+
+        // Function to navigate to the chat page
+        function showChat() {
+            window.location.href = 'p3.html';
+        }
+
+        function showProfile() {
+    document.getElementById('content').innerHTML = `
+        <div class="profile">
+            <h2>Perfil</h2>
+            <p><strong>Nome:</strong> Cleitinho</p>
+            <p><strong>Email:</strong> Café.comToddy@example.com</p>
+            <p><strong>Telefone:</strong> (11) 1234-5678</p>
+            <div style="display: flex; align-items: center; gap: 10px; margin-top: 10px;">
+                <button  onclick="showSettings()" style="display: flex; align-items: center;">
+                    <i class="fas fa-pencil-alt" style="color: white; font-size: 16px; margin-right: 5px;"></i>
+                    Editar Perfil
+                </button>
+            </div>
+        </div>
+    `;
+
+}
+
+        function showSettings() {
+            document.getElementById('content').innerHTML = `
+                <div class="settings">
+                    <h2>Configurações</h2>
+                    <div class="option-group">
+                        <i class="fas fa-language icon"></i>
+                        <div>
+                            <label for="language">Idioma:</label>
+                            <select id="language">
+                                <option value="pt">Português</option>
+                                <option value="en">Inglês</option>
+                                <option value="es">Espanhol</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <i class="fas fa-lock icon"></i>
+                        <div>
+                            <label for="password">Alterar Senha:</label>
+                            <input type="password" id="password" placeholder="Nova Senha">
+                        </div>
+                    </div>
+                   
+                    <div class="option-group">
+                        <i class="fas fa-user icon"></i>
+                        <div>
+                            <label for="username">Nome de Usuário:</label>
+                            <input type="text" id="username" placeholder="Nome de Usuário">
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <i class="fas fa-envelope icon"></i>
+                        <div>
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <i class="fas fa-phone icon"></i>
+                        <div>
+                            <label for="phone">Telefone:</label>
+                            <input type="tel" id="phone" placeholder="Telefone">
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <i class="fas fa-calendar icon"></i>
+                        <div>
+                            <label for="dob">Data de Nascimento:</label>
+                            <input type="date" id="dob">
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <i class="fas fa-map-marker-alt icon"></i>
+                        <div>
+                            <label for="address">Endereço:</label>
+                            <input type="text" id="address" placeholder="Endereço">
+                        </div>
+                    </div>
+                    <div class="option-group">
+                        <i class="fas fa-palette icon"></i>
+                        <div>
+                            <label for="theme">Tema:</label>
+                            <select id="theme">
+                                <option value="light">Claro</option>
+                                <option value="dark">Escuro</option>
+                                <option value="blue">Azul</option>
+                                <option value="green">Verde</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button onclick="saveChanges()">Salvar Alterações</button>
+                </div>`;
+        }
+
+        // Function to save changes in settings
+        function saveChanges() {
+            // Logic to save changes
+            alert('Alterações salvas com sucesso!');
+        }
+
+        document.addEventListener('DOMContentLoaded', showSettings);
+ 
+
+
+
+        function showMap() {
+    // Clear content
+    document.getElementById('content').innerHTML = '';
+
+    // Create the information section
+    const infoSection = document.createElement('div');
+    infoSection.className = 'info-section';
+    infoSection.innerHTML = `
+        <h2>Encontre o Local Perfeito para Seu Projeto</h2>
+        <p>Este mapa interativo foi criado para ajudar você a descobrir as melhores localizações disponíveis para seu tão sonhado projeto. Explore áreas ideais para construção, lazer e indústria, e clique nos pontos destacados para obter mais informações. Dê o primeiro passo em direção ao sucesso do seu projeto!</p>
+    `;
+
+    // Create the map container
+    const mapContainer = document.createElement('div');
+    mapContainer.className = 'map-container';
+
+    const map = document.createElement('iframe');
+    map.className = 'map';
+    map.id = 'mapFrame'; // Assigning an ID to the iframe for easy access
+    map.src = 'https://www.openstreetmap.org/export/embed.html?bbox=-74.00597%2C40.71278%2C-73.98597%2C40.72278&layer=mapnik&marker=40.71778%2C-74.00597';
+    map.frameBorder = 0;
+    map.allowFullscreen = true;
+
+    // Map info section
+    const mapInfo = document.createElement('div');
+    mapInfo.className = 'map-info';
+    mapInfo.innerHTML = `
+        <h3>Localizações disponíveis</h3>
+        <ul>
+            <li><strong>Local A:</strong> Excelente para construção de edifícios.</li>
+            <li><strong>Local B:</strong> Ótimo para áreas de lazer.</li>
+            <li><strong>Local C:</strong> Ideal para instalações industriais.</li>
+        </ul>
+        <button onclick="getLocationDetails('A')">Ver Detalhes do Local A</button>
+        <button onclick="getLocationDetails('B')">Ver Detalhes do Local B</button>
+        <button onclick="getLocationDetails('C')">Ver Detalhes do Local C</button>
+    `;
+
+    // Append the info section, map, and map info to the content
+    document.getElementById('content').appendChild(infoSection);
+    mapContainer.appendChild(map);
+    mapContainer.appendChild(mapInfo);
+    document.getElementById('content').appendChild(mapContainer);
+}
+
+function getLocationDetails(location) {
+    let details = '';
+    let lat, lng;
+
+    switch(location) {
+        case 'A':
+            details = 'Local A é uma área central com acesso fácil a transporte público. Ideal para edifícios comerciais e residenciais.';
+            lat = 40.71778; // Coordenada fictícia para Local A
+            lng = -74.00597;
+            break;
+        case 'B':
+            details = 'Local B é um parque natural que oferece espaço para atividades ao ar livre, perfeito para famílias.';
+            lat = 40.72078; // Coordenada fictícia para Local B
+            lng = -74.00197;
+            break;
+        case 'C':
+            details = 'Local C possui infraestrutura industrial adequada, incluindo rede elétrica e água potável.';
+            lat = 40.71578; // Coordenada fictícia para Local C
+            lng = -73.99597;
+            break;
+        default:
+            details = 'Local não encontrado.';
+    }
+
+    alert(details);
+
+    // Update the map to center on the selected location
+    const mapFrame = document.getElementById('mapFrame');
+    mapFrame.src = `https://www.openstreetmap.org/export/embed.html?bbox=${lng-0.002}%2C${lat-0.002}%2C${lng+0.002}%2C${lat+0.002}&layer=mapnik&marker=${lat}%2C${lng}`;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function clearPreviousInfo() {
+    const existingInfo = document.querySelector('.info-section');
+    if (existingInfo) {
+        existingInfo.remove(); // Remove a seção de informações anterior
+    }
+}
+
+function showLocationInfo(location) {
+    clearPreviousInfo(); // Limpa informações anteriores
+
+    let info = '';
+    let schools = ['Escola A', 'Escola B', 'Escola C'];
+    let hospitals = ['Hospital A', 'Hospital B'];
+
+    switch(location) {
+        case 'A':
+            info = 'Local A: Excelente para construção de edifícios.';
+            break;
+        case 'B':
+            info = 'Local B: Ótimo para áreas de lazer.';
+            break;
+        case 'C':
+            info = 'Local C: Ideal para instalações industriais.';
+            break;
+        default:
+            info = 'Informações não disponíveis.';
+    }
+
+    // Criar a seção de informações
+    const infoSection = document.createElement('div');
+    infoSection.className = 'info-section';
+    infoSection.innerHTML = `
+        <h2>Informações sobre o Local ${location}</h2>
+        <p>${info}</p>
+        <h3>Escolas nas proximidades:</h3>
+        <ul>
+            ${schools.map(school => `<li>${school}</li>`).join('')}
+        </ul>
+        <h3>Hospitais nas proximidades:</h3>
+        <ul>
+            ${hospitals.map(hospital => `<li>${hospital}</li>`).join('')}
+        </ul>
+    `;
+
+    // Adicionar a seção de informações ao conteúdo
+    document.getElementById('content').appendChild(infoSection);
+}
+
+// Modifique a função getLocationDetails para chamar showLocationInfo
+function getLocationDetails(location) {
+    let details = '';
+    let lat, lng;
+
+    switch(location) {
+        case 'A':
+            details = 'Local A é uma área central com acesso fácil a transporte público.';
+            lat = 40.71778; // Coordenada fictícia para Local A
+            lng = -74.00597;
+            break;
+        case 'B':
+            details = 'Local B é um parque natural que oferece espaço para atividades ao ar livre.';
+            lat = 40.72078; // Coordenada fictícia para Local B
+            lng = -74.00197;
+            break;
+        case 'C':
+            details = 'Local C possui infraestrutura industrial adequada.';
+            lat = 40.71578; // Coordenada fictícia para Local C
+            lng = -73.99597;
+            break;
+        default:
+            details = 'Local não encontrado.';
+    }
+
+    alert(details);
+    showLocationInfo(location); // Chama a nova função para mostrar informações detalhadas
+
+
+
+    
+    // Atualiza o mapa para centralizar na localização selecionada
+    const mapFrame = document.getElementById('mapFrame');
+    mapFrame.src = `https://www.openstreetmap.org/export/embed.html?bbox=${lng-0.002}%2C${lat-0.002}%2C${lng+0.002}%2C${lat+0.002}&layer=mapnik&marker=${lat}%2C${lng}`;
+
+
+
+
+    
+}
+
+    </script>
+
+       
+
+</head>
+<body>
+    
+    <div class="navbar opacity" id="navbar">
+        <div id="icones">
+            <a href="#conteudo1"><img src="img/latsflaubranco-removebg-preview.png" alt="Logo Tektõn"></a>
+            <a id="home" href="lobbyperfil1.html" style="color: #FF9A00;">Home</a>
+            <a id="ajuda" href="ajuda.html">Ajuda</a>
+            <a id="sair" href="index.html">Sair </a>
+        </div>
+        <div id="linha"></div>
+    </div>
+ 
+</head>
+
+    <div style="height: 150px;"></div>
+<body>
+    <div class="container">
+        <div class="nav">
+            <button onclick="togglePlants()"><i class="fas fa-home"></i> Minhas Plantas</button>
+            <button onclick="showMap()" style="display: flex; align-items: center;">
+                <i class="fas fa-map-marker-alt" style="color: white; font-size: 16px; margin-right: 5px;"></i>
+                Mapa
+            </button>
+            <button onclick="showChat()"><i class="fas fa-comments"></i> Chat com Arquiteto</button>
+            <button onclick="showProfile()"><i class="fas fa-user"></i> Perfil</button>
+          
+        </div>
+        <div id="content" class="content">
+            <h2>Bem-vindo ao Lobby Tektõn!</h2>
+            <p>Selecione uma opção no menu acima para começar.</p>
+        </div>
+    </div>
+   
+</body>
+</html>
+<div></div>

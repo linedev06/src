@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord-like Chat with Audio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        .logo {
+            width: 150px; /* Aumenta o tamanho da logo */
+            margin: 15px;
+            position: absolute;
+            top: 0;
+            right: 35PX;
+            z-index: 10;
+        }
+
+        .server-list {
+            margin-top: 200PX;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .server-btn {
+            background-color: #e0e0e0;
+            color: #333;
+            margin-bottom: 12px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .server-btn:hover, .server-btn.active {
+            background-color: #FF9A00;
+            color: #fff;
+        }
+
+        .channel-list {
+            flex-grow: 1;
+            padding: 15px;
+        }
+
+        .channel-list h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .channel-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .channel-list ul li {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .channel-list ul li:hover, .channel-list ul li.active {
+            background-color: #FF9A00;
+            color: #fff;
+        }
+
+        .chat-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9f9;
+        }
+
+        .chat-header {
+            background-color: #ffffff;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .chat-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f4f4f4;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .message p {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .message strong {
+            font-weight: 600;
+            color: #FF9A00;
+        }
+
+        .chat-input-area {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            color: #333;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        #chat-input:focus {
+            border-color: #FF9A00;
+        }
+
+        #send-btn, #voice-btn {
+            background-color: #FF9A00;
+            border: none;
+            color: #fff;
+            padding: 12px;
+            margin-left: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #send-btn:hover, #voice-btn:hover {
+            background-color: #ffa533;
+        }
+
+        #voice-btn {
+            padding: 0 15px;
+            font-size: 18px;
+        }
+
+        /* Voice recording indicator styling */
+        .recording-indicator {
+            position: absolute;
+            left: 15px;
+            bottom: 10px;
+            font-size: 12px;
+            color: red;
+            display: none;
+        }
+
+        .recording-indicator.active {
+            display: block;
+        }
+
+        .audio-message {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .audio-message audio {
+            margin-left: 10px;
+            width: 200px;
+        }
+
+        /* Timer */
+        .timer {
+            position: absolute;
+            right: 15px;
+            bottom: 10px;
+            font-size: 12px;
+            color: #333;
+            display: none;
+        }
+
+        .timer.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+           <a href="index.html"><img src="img/latsflaubranco-removebg-preview.png" alt="Logo" class="logo"></a> 
+            <div class="server-list">
+                <button class="server-btn active" data-server="server1">Server 1</button>
+                <button class="server-btn" data-server="server2">Server 2</button>
+                <button class="server-btn" data-server="server3">Server 3</button>
+            </div>
+            <div class="channel-list">
+                <h3>Channels</h3>
+                <ul>
+                    <li class="active" data-channel="#general">#general</li>
+                    <li data-channel="#random">#random</li>
+                    <li data-channel="#voice-chat">#voice-chat</li>
+                </ul>
+            </div>
+        </aside>
+        
+        <main class="chat-area">
+            <div class="chat-header">
+                <h2 id="current-channel">#general</h2>
+            </div>
+            <div class="chat-content" id="chat-content-server1">
+                <div class="message">
+                    <p><strong>Bot:</strong></p>
+
+                    <p>Olá!</p>
+                    
+                    <p>Agradecemos profundamente por escolher a Tektõn para suas necessidades arquitetônicas. Este é um serviço exclusivo onde você tem a oportunidade de falar diretamente com o seu arquiteto pessoal.</p>
+                    
+                    <p>Se tiver qualquer dúvida ou precisar de assistência, nossa equipe está pronta para proporcionar a você um atendimento excepcional e personalizado.</p>
+                    
+                    <p>Estamos aqui para garantir que cada detalhe do seu projeto seja executado com a máxima precisão e qualidade. Sua satisfação é nossa prioridade.</p>
+                </div>
+                <div class="message">
+                    <p><strong>User1:</strong> Hello World in Server 1!</p>
+                </div>
+            </div>
+            <div class="chat-content" id="chat-content-server2" style="display: none;">
+                <div class="message">
+                    <p><strong>Bot:</strong></p>
+
+                    <p>Olá!</p>
+                    
+                    <p>Agradecemos profundamente por escolher a Tektõn para suas necessidades arquitetônicas. Este é um serviço exclusivo onde você tem a oportunidade de falar diretamente com o seu arquiteto pessoal.</p>
+                    
+                    <p>Se tiver qualquer dúvida ou precisar de assistência, nossa equipe está pronta para proporcionar a você um atendimento excepcional e personalizado.</p>
+                    
+                    <p>Estamos aqui para garantir que cada detalhe do seu projeto seja executado com a máxima precisão e qualidade. Sua satisfação é nossa prioridade.</p>
+
+                </div>
+                <div class="message">
+                    <p><strong>User2:</strong> Hello World in Server 2!</p>
+                </div>
+            </div>
+            <div class="chat-content" id="chat-content-server3" style="display: none;">
+                <div class="message">
+                    <p><strong>Bot:</strong></p>
+
+                    <p>Olá!</p>
+                    
+                    <p>Agradecemos profundamente por escolher a Tektõn para suas necessidades arquitetônicas. Este é um serviço exclusivo onde você tem a oportunidade de falar diretamente com o seu arquiteto pessoal.</p>
+                    
+                    <p>Se tiver qualquer dúvida ou precisar de assistência, nossa equipe está pronta para proporcionar a você um atendimento excepcional e personalizado.</p>
+                    
+                    <p>Estamos aqui para garantir que cada detalhe do seu projeto seja executado com a máxima precisão e qualidade. Sua satisfação é nossa prioridade.</p>
+        
+                </div>
+                <div class="message">
+                    <p><strong>User3:</strong> Hello World in Server 3!</p>
+                </div>
+            </div>
+            <div class="chat-input-area">
+                <span class="recording-indicator" id="recording-indicator">Recording...</span>
+                <input type="text" id="chat-input" placeholder="Type your message...">
+                <button id="send-btn">Send</button>
+                <button id="voice-btn">🎤</button>
+                <span class="timer" id="timer">00:00</span>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            const chatContentServer1 = document.getElementById('chat-content-server1');
+            const chatContentServer2 = document.getElementById('chat-content-server2');
+            const chatContentServer3 = document.getElementById('chat-content-server3');
+            const voiceBtn = document.getElementById('voice-btn');
+            const recordingIndicator = document.getElementById('recording-indicator');
+            const timer = document.getElementById('timer');
+            let activeChatContent = chatContentServer1; // default active server content
+            let activeChannel = "#general"; // default active channel
+            let recordingInterval;
+            let seconds = 0;
+    
+            function sendMessage() {
+                const messageText = chatInput.value.trim();
+                if (messageText !== "") {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message');
+                    messageElement.innerHTML = `<p><strong>You:</strong> ${messageText}</p>`;
+                    activeChatContent.appendChild(messageElement);
+                    chatInput.value = ""; // Clear the input field
+                    activeChatContent.scrollTop = activeChatContent.scrollHeight; // Scroll to the bottom
+                }
+            }
+    
+            chatInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+    
+            sendBtn.addEventListener('click', function() {
+                sendMessage();
+            });
+    
+            // Handle voice recording
+            let mediaRecorder;
+            let audioChunks = [];
+    
+            voiceBtn.addEventListener('click', function() {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    alert("Your browser does not support audio recording.");
+                    return;
+                }
+    
+                if (mediaRecorder && mediaRecorder.state === "recording") {
+                    mediaRecorder.stop();
+                    recordingIndicator.classList.remove('active');
+                    timer.classList.remove('active');
+                    clearInterval(recordingInterval);
+                    seconds = 0;
+                    timer.textContent = "00:00";
+                } else {
+                    navigator.mediaDevices.getUserMedia({ audio: true })
+                        .then(function(stream) {
+                            mediaRecorder = new MediaRecorder(stream);
+                            mediaRecorder.start();
+    
+                            recordingIndicator.classList.add('active');
+                            timer.classList.add('active');
+    
+                            recordingInterval = setInterval(function() {
+                                seconds++;
+                                const minutes = Math.floor(seconds / 60);
+                                const secondsLeft = seconds % 60;
+                                timer.textContent = `${minutes.toString().padStart(2, '0')}:${secondsLeft.toString().padStart(2, '0')}`;
+                            }, 1000);
+    
+                            mediaRecorder.addEventListener('dataavailable', function(event) {
+                                audioChunks.push(event.data);
+                            });
+    
+                            mediaRecorder.addEventListener('stop', function() {
+                                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                                const audioUrl = URL.createObjectURL(audioBlob);
+                                const audioMessageElement = document.createElement('div');
+                                audioMessageElement.classList.add('message');
+                                audioMessageElement.innerHTML = `<p><strong>You:</strong> Sent a voice message</p>
+                                <div class="audio-message"><audio controls src="${audioUrl}"></audio></div>`;
+                                activeChatContent.appendChild(audioMessageElement);
+                                audioChunks = [];
+                                activeChatContent.scrollTop = activeChatContent.scrollHeight;
+                            });
+                        });
+                }
+            });
+    
+            // Handle switching servers
+            document.querySelectorAll('.server-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.server-btn').forEach(function(button) {
+                        button.classList.remove('active');
+                    });
+                    btn.classList.add('active');
+    
+                    const selectedServer = btn.getAttribute('data-server');
+                    activeChatContent.style.display = 'none';
+    
+                    switch (selectedServer) {
+                        case 'server1':
+                            activeChatContent = chatContentServer1;
+                            break;
+                        case 'server2':
+                            activeChatContent = chatContentServer2;
+                            break;
+                        case 'server3':
+                            activeChatContent = chatContentServer3;
+                            break;
+                    }
+    
+                    activeChatContent.style.display = 'block';
+                    activeChatContent.scrollTop = activeChatContent.scrollHeight;
+                });
+            });
+    
+            // Handle switching channels
+            document.querySelectorAll('.channel-list ul li').forEach(function(channelItem) {
+                channelItem.addEventListener('click', function() {
+                    document.querySelectorAll('.channel-list ul li').forEach(function(item) {
+                        item.classList.remove('active');
+                    });
+                    channelItem.classList.add('active');
+    
+                    activeChannel = channelItem.getAttribute('data-channel');
+                    document.getElementById('current-channel').innerText = activeChannel;
+                });
+            });
+        });
+    </script>

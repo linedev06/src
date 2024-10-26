@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+              <img src="img/latsflaubranco-removebg-preview.png" alt="Logo">
+            </div>
+            <div class="filters">
+                <span class="notification">Favoritado</span>
+                <button class="filter-btn">Mais filtros</button>
+                <button class="filter-btn">Ver mapa</button>
+                <button class="filter-btn">Recentes</button>
+              </div>
+              
+        </div>
+        
+        <div class="properties">
+            <div class="property">
+              <div class="property-image" style="background-image: url(img/architecture2.jpg);"></div>
+              <div class="property-info">
+                <label class="container">
+                    <input type="checkbox">
+                    <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                  </label>
+                <div class="property-type">Sobrado</div>
+                <div class="property-name">Condomínio Belvedere I</div>
+                <div class="property-location">Votorantim - SP</div>
+                <div class="property-size">540.11 m²</div>
+                <div class="property-bedrooms">4 Quartos</div>
+                <div class="property-suites">4 Suites</div>
+                <div class="property-bathrooms">3 Banheiros</div>
+                <div class="property-garages">9 Vagas</div>
+                <div class="property-price">R$ 3.800.000</div>
+                <button class="property-btn">Venda</button>
+              </div>
+            </div>
+            <div class="property">
+              <div class="property-image" style="background-image: url(img/architecture1.jpg);"></div>
+              <div class="property-info">
+                <label class="container">
+                    <input type="checkbox">
+                    <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                  </label>
+                <div class="property-type">Apartamento</div>
+                <div class="property-name">Edifício Vista Verde</div>
+                <div class="property-location">São Paulo - SP</div>
+                <div class="property-size">120 m²</div>
+                <div class="property-bedrooms">3 Quartos</div>
+                <div class="property-suites">2 Suites</div>
+                <div class="property-bathrooms">2 Banheiros</div>
+                <div class="property-garages">2 Vagas</div>
+                <div class="property-price">R$ 1.200.000</div>
+                <button class="property-btn">Aluguel</button>
+              </div>
+            </div>
+            <div class="property">
+              <div class="property-image" style="background-image: url(img/architecture3.jpg);"></div>
+              <div class="property-info">
+                <label class="container">
+                    <input type="checkbox">
+                    <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                  </label>
+                <div class="property-type">Casa</div>
+                <div class="property-name">Chácara da Serra</div>
+                <div class="property-location">Itapecerica da Serra - SP</div>
+                <div class="property-size">800 m²</div>
+                <div class="property-bedrooms">5 Quartos</div>
+                <div class="property-suites">4 Suites</div>
+                <div class="property-bathrooms">5 Banheiros</div>
+                <div class="property-garages">6 Vagas</div>
+                <div class="property-price">R$ 4.500.000</div>
+                <button class="property-btn">Venda</button>
+              </div>
+            </div>
+            <div class="property">
+              <div class="property-image" style="background-image: url(property4.jpg);"></div>
+              <div class="property-info">
+                <label class="container">
+                    <input type="checkbox">
+                    <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                  </label>
+                <div class="property-type">Apartamento</div>
+                <div class="property-name">Edifício Jardins</div>
+                <div class="property-location">São Paulo - SP</div>
+                <div class="property-size">150 m²</div>
+                <div class="property-bedrooms">3 Quartos</div>
+                <div class="property-suites">2 Suites</div>
+                <div class="property-bathrooms">2 Banheiros</div>
+                <div class="property-garages">2 Vagas</div>
+                <div class="property-price">R$ 1.800.000</div>
+                <button class="property-btn">Aluguel</button>
+              </div>
+            </div>
+            <div class="property">
+                <div class="property-image" style="background-image: url(property5.jpg);"></div>
+                <div class="property-info">
+                    <label class="container">
+                        <input type="checkbox">
+                        <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                      </label>
+                  <div class="property-type">Sobrado</div>
+                  <div class="property-name">Condomínio Serra Azul</div>
+                  <div class="property-location">São José dos Campos - SP</div>
+                  <div class="property-size">600 m²</div>
+                  <div class="property-bedrooms">5 Quartos</div>
+                  <div class="property-suites">4 Suites</div>
+                  <div class="property-bathrooms">4 Banheiros</div>
+                  <div class="property-garages">6 Vagas</div>
+                  <div class="property-price">R$ 3.500.000</div>
+                  <button class="property-btn">Venda</button>
+                </div>
+              </div>
+              <div class="property">
+                <div class="property-image" style="background-image: url(property6.jpg);"></div>
+                <div class="property-info">
+                    <label class="container">
+                        <input type="checkbox">
+                        <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                      </label>
+                  <div class="property-type">Apartamento</div>
+                  <div class="property-name">Edifício Tropicália</div>
+                  <div class="property-location">Rio de Janeiro - RJ</div>
+                  <div class="property-size">180 m²</div>
+                  <div class="property-bedrooms">3 Quartos</div>
+                  <div class="property-suites">2 Suites</div>
+                  <div class="property-bathrooms">3 Banheiros</div>
+                  <div class="property-garages">2 Vagas</div>
+                  <div class="property-price">R$ 2.200.000</div>
+                  <button class="property-btn">Venda</button>
+                </div>
+              </div>
+              <div class="property">
+                <div class="property-image" style="background-image: url(property7.jpg);"></div>
+                <div class="property-info">
+                    <label class="container">
+                        <input type="checkbox">
+                        <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                      </label>
+                  <div class="property-type">Casa</div>
+                  <div class="property-name">Chácara do Lago</div>
+                  <div class="property-location">Campinas - SP</div>
+                  <div class="property-size">700 m²</div>
+                  <div class="property-bedrooms">6 Quartos</div>
+                  <div class="property-suites">5 Suites</div>
+                  <div class="property-bathrooms">6 Banheiros</div>
+                  <div class="property-garages">8 Vagas</div>
+                  <div class="property-price">R$ 5.000.000</div>
+                  <button class="property-btn">Venda</button>
+                </div>
+              </div>
+              <div class="property">
+                <div class="property-image" style="background-image: url(property8.jpg);"></div>
+                <div class="property-info">
+                    <label class="container">
+                        <input type="checkbox">
+                        <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                      </label>
+                  <div class="property-type">Apartamento</div>
+                  <div class="property-name">Edifício Parque das Nações</div>
+                  <div class="property-location">Brasília - DF</div>
+                  <div class="property-size">130 m²</div>
+                  <div class="property-bedrooms">2 Quartos</div>
+                  <div class="property-suites">2 Suites</div>
+                  <div class="property-bathrooms">2 Banheiros</div>
+                  <div class="property-garages">1 Vaga</div>
+                  <div class="property-price">R$ 1.500.000</div>
+                  <button class="property-btn">Aluguel</button>
+                </div>
+              </div>
+              <div class="property">
+                <div class="property-image" style="background-image: url(property8.jpg);"></div>
+                <div class="property-info">
+                    <label class="container">
+                        <input type="checkbox">
+                        <svg id="Layer_1" version="1.0" viewBox="0 0 24 24" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M16.4,4C14.6,4,13,4.9,12,6.3C11,4.9,9.4,4,7.6,4C4.5,4,2,6.5,2,9.6C2,14,12,22,12,22s10-8,10-12.4C22,6.5,19.5,4,16.4,4z"></path></svg>
+                      </label>
+                  <div class="property-type">Apartamento</div>
+                  <div class="property-name">Edifício Parque das Nações</div>
+                  <div class="property-location">Brasília - DF</div>
+                  <div class="property-size">130 m²</div>
+                  <div class="property-bedrooms">2 Quartos</div>
+                  <div class="property-suites">2 Suites</div>
+                  <div class="property-bathrooms">2 Banheiros</div>
+                  <div class="property-garages">1 Vaga</div>
+                  <div class="property-price">R$ 1.500.000</div>
+                  <button class="property-btn">Aluguel</button>
+                </div>
+      </div>
+
+      
+
+</body>
+</html>
+
+<style>
+.logo img {
+  max-width: 200px;
+  max-height: 200px;
+}
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #ffffff;
+  
+}
+
+.logo {
+  width: 150px;
+  height: auto;
+}
+
+.filters {
+  display: flex;
+}
+
+.filter-btn {
+  margin-left: 10px;
+  padding: 5px 10px;
+  background-color: #333;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.properties {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.property {
+  width: 30%;
+  margin-bottom: 20px;
+  background-color: #f2f2f2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.property-image {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.property-info {
+  padding: 20px;
+}
+
+.property-type {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.property-name {
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.property-location {
+  font-size: 0.8em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.property-size,
+.property-bedrooms,
+.property-suites,
+.property-bathrooms,
+.property-garages {
+  margin-bottom: 5px;
+}
+
+.property-price {
+  font-size: 1.2em;
+  font-weight: bold;}
+  .container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.container {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.container svg {
+  position: relative;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  transition: all 0.3s;
+  fill: #616161;
+  margin-left: 285px;
+}
+
+.container svg:hover {
+  transform: scale(1.1);
+}
+
+.container input:checked ~ svg {
+  fill: #E3474F;
+}
+
+
+.filters .notification {
+  /* Adicione os estilos necessários para exibir a notificação */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #000000;
+  color: rgb(0, 0, 0);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  display: none;
+}
+
+.filters .favorited .notification {
+  display: block;
+}
+</style>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>fila virtual</title>
+  <link rel="stylesheet" href="style/p1.css">
+  <script src="script.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+</head>
+
+<body>
+  <main>
+    <div id="Borda">
+    <form id="filter-form">
+      <label for="pavimentos">Pavimentos:</label>
+      <select id="pavimentos">
+        <option value="select">Selecionar</option>
+        <option value="5x20" >5x20</option>
+        <option value="7x20">7x20</option>
+        <option value="10x20">10x20</option>
+       
+      </select>
+
+      <label for="dormitorios">Dormitórios:</label>
+      <select id="dormitorios">
+        <option value="select">Selecionar</option>
+        <option value="2" >2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <!-- Add more options here -->
+      </select>
+
+      <label for="terrenos">Terrenos:</label>
+      <select id="terrenos">
+        <option value="select">Selecionar</option>
+        <option value="5x25" >5x25</option>
+        <option value="7x25">7x25</option>
+        <option value="10x25">10x25</option>
+        <!-- Add more options here -->
+      </select>
+
+      <label for="area-construida">Área Construída:</label>
+      <select id="area-construida">
+        <option value="select">Selecionar</option>
+        <option value="até-100" >até-100</option>
+        <option value="100-200">100-200 m²</option>
+        <option value="200-300">200-300 m²</option>
+        <!-- Add more options here -->
+      </select>
+
+      <label for="sobrado">Sobrado:</label>
+      <select id="sobrado">
+        <option value="select">Selecionar</option>
+        <option value="sim">Sim</option> 
+        <option value="não">Não</option>
+        <!-- Add more options here -->
+      </select>
+
+      <button id="filter-btn">Calcular Preço</button>
+    </form>
+    <div id="result"></div>
+  </main></div>
+  <div id="result"></div>
+  <div id="image-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+  <script>
+
+    const filterForm = document.getElementById('filter-form');
+    const resultDiv = document.getElementById('result');
+
+    const pavimentosPrices = {
+      '5x20': 1000,
+      '7x20': 1500,
+      '10x20': 2000,
+
+    };
+
+    const dormitoriosPrices = {
+      '2': 500,
+      '3': 800,
+      '4': 1200,
+
+    };
+
+    const terrenosPrices = {
+      '5x25': 200,
+      '7x25': 300,
+      '10x25': 400,
+
+    };
+
+    const areaConstruidaPrices = {
+      'até-100': 1000,
+      '100-200': 2000,
+      '200-300': 3000,
+
+    };
+
+    const sobradoPrices = {
+      'sim': 500,
+      'não': 0,
+
+    };
+
+    filterForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      let price = 0;
+
+      const pavimentos = pavimentosPrices[document.getElementById('pavimentos').value];
+      const dormitorios = dormitoriosPrices[document.getElementById('dormitorios').value];
+      const terrenos = terrenosPrices[document.getElementById('terrenos').value];
+      const areaConstruida = areaConstruidaPrices[document.getElementById('area-construida').value];
+      const sobrado = sobradoPrices[document.getElementById('sobrado').value];
+
+      if (pavimentos) {
+        price += pavimentos;
+      }
+
+      if (dormitorios) {
+        price += dormitorios;
+      }
+
+      if (terrenos) {
+        price += terrenos;
+      }
+
+      if (areaConstruida) {
+        price += areaConstruida;
+      }
+
+      if (sobrado) {
+        price += sobrado;
+      }
+
+
+
+      resultDiv.innerHTML = `O preço é de R$ ${price.toLocaleString('pt-BR')}`;
+    });
+
+
+
+
+
+    const imageContainer = document.getElementById('image-container');
+    const selects = document.querySelectorAll('select');
+    const imageUrls = [
+      'img/mcasa.png',
+      'img/casa.png',
+      'img/architecture2.jpg'
+    ];
+
+    function calculateScore() {
+      let score = 0;
+      selects.forEach((select) => {
+        const selectedOption = select.options[select.selectedIndex];
+        const optionValue = parseInt(selectedOption.value);
+        score += optionValue;
+      });
+      return score;
+    }
+
+    function updateImage() {
+      const score = calculateScore();
+      const imageIndex = Math.min(Math.floor(score / 50), 2);
+      const imageUrl = imageUrls[imageIndex];
+      const imageElement = document.createElement('img');
+      imageElement.src = imageUrl;
+      imageContainer.innerHTML = '';
+      imageContainer.appendChild(imageElement);
+    }
+
+    selects.forEach((select) => {
+      select.addEventListener('change', updateImage);
+    });
+
+    // Initialize the image with the first selected option
+    updateImage();
+  </script>
+
+</body>
+
+
+</html>

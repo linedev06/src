@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord-like Chat with Audio</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #e0e0e0;
+            position: relative;
+            cursor: ew-resize;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .sidebar.hidden {
+            transform: translateX(-100%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+
+        .sidebar-toggle {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: none;
+        }
+
+        .toggle-icon {
+            width: 40px;
+            height: auto;
+        }
+
+     
+        .sidebar.hidden+.sidebar-toggle {
+            display: block;
+        }
+
+        .sidebar-reveal {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: none;
+            z-index: 15;
+        }
+
+        .pull-icon {
+            width: 40px;
+            height: auto;
+        }
+
+        .logo {
+            width: 150px;
+            margin: 15px;
+            position: absolute;
+            top: 0;
+            right: 35PX;
+            z-index: 10;
+        }
+
+        .server-list {
+            margin-top: 200PX;
+            display: flex;
+            flex-direction: column;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .server-btn {
+            background-color: #e0e0e0;
+            color: #333;
+            margin-bottom: 12px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .server-btn:hover,
+        .server-btn.active {
+            background-color: #FF9A00;
+            color: #fff;
+        }
+
+        .channel-list {
+            flex-grow: 1;
+            padding: 15px;
+        }
+
+        .channel-list h3 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .channel-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .channel-list ul li {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .channel-list ul li:hover,
+        .channel-list ul li.active {
+            background-color: #FF9A00;
+            color: #fff;
+        }
+
+        .chat-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #f9f9f9;
+        }
+
+        .chat-header {
+            background-color: #ffffff;
+            padding: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .chat-content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f4f4f4;
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .message p {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .message strong {
+            font-weight: 600;
+            color: #FF9A00;
+        }
+
+        .chat-input-area {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #ffffff;
+            border-top: 1px solid #e0e0e0;
+            position: relative;
+        }
+
+        #chat-input {
+            flex-grow: 1;
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            color: #333;
+            outline: none;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        #chat-input:focus {
+            border-color: #FF9A00;
+        }
+
+        #send-btn,
+        #voice-btn {
+            background-color: #FF9A00;
+            border: none;
+            color: #fff;
+            padding: 12px;
+            margin-left: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #send-btn:hover,
+        #voice-btn:hover {
+            background-color: #ffa533;
+        }
+
+        #voice-btn {
+            padding: 0 15px;
+            font-size: 18px;
+        }
+
+
+        .recording-indicator {
+            position: absolute;
+            left: 15px;
+            bottom: 10px;
+            font-size: 12px;
+            color: red;
+            display: none;
+        }
+
+        .recording-indicator.active {
+            display: block;
+        }
+
+        .audio-message {
+            background-color: #ffffff;
+            border: 2px solid #f4f4f4;
+            border-radius: 30px;
+            padding: 10px;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 350px;
+        }
+
+
+        .audio-message p {
+            margin: 0;
+            font-size: 14px;
+            color: #FF9A00;
+            font-weight: bold;
+        }
+
+
+        .audio-message em {
+            color: #555;
+            font-style: italic;
+        }
+
+
+        .audio-message audio {
+            margin-top: 8px;
+            width: 100%;
+            border-radius: 100px;
+            border: 1px solid #FF9A00;
+        }
+
+        .timer {
+            position: absolute;
+            right: 15px;
+            bottom: 10px;
+            font-size: 12px;
+            color: #333;
+            display: none;
+        }
+
+        .timer.active {
+            display: block;
+        }
+
+        .ligacao-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #FF9A00;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .ligacao-btn:hover {
+            background-color: #ffa533;
+        }
+
+        .ligacao-janela {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: none;
+        }
+
+        .ligacao-janela {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            display: none;
+            text-align: center;
+        }
+
+        .ligacao-janela h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .ligacao-janela p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .ligacao-circulo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #FF9A00;
+            margin: 20px auto;
+            padding: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: piscar 1s infinite;
+            border: 2px solid #FF9A00;
+        }
+
+        .ligacao-circulo img {
+            width: 180px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #fff;
+            padding: 5px;
+        }
+
+        .ligacao-janela h2 {
+            margin-top: 0;
+        }
+
+        .ligacao-janela p {
+            margin-bottom: 10px;
+        }
+
+        .fechar-ligacao-btn {
+            background-color: #FF9A00;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        .fechar-ligacao-btn:hover {
+            background-color: #ffa533;
+        }
+
+        @keyframes piscar {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+        .features-toggle {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background-color: #FF9A00;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 0;
+            margin-bottom: 190px;
+            margin-left: 25px;
+        }
+
+        .features-toggle:hover {
+            background-color: #ffa533;
+        }
+
+        .features-area {
+            position: fixed;
+            bottom: 250px;
+            left: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            width: 300px;
+            z-index: 20;
+            display: none;
+            
+        }
+
+        .feature {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        .feature:hover {
+            border-color: #FF9A00;
+        }
+
+        .feature h4 {
+            margin: 0;
+            color: #FF9A00;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: #FF9A00;
+            width: 0;
+            /* Start with 0% width */
+            transition: width 0.3s ease;
+        }
+
+        .feedback-section {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e9f5e9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .feedback-section h4 {
+            margin: 0;
+            color: #333;
+        }
+
+        .feedback-section p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+
+
+        .feedback-section h4 {
+            margin: 0;
+            color: #333;
+        }
+
+        .feedback-section p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .feedback-input {
+            margin-top: 10px;
+            display: flex;
+        }
+
+
+
+        .feedback-input input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ffa533;
+            border-radius: 4px;
+        }
+
+        .feedback-input button {
+            margin-left: 10px;
+            background-color: #FF9A00;
+            border: none;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .feedback-input button:hover {
+            background-color: #ffa533;
+        }
+
+
+        .poll-section {
+            margin-top: 10px;
+            /* Espaçamento entre o feedback e a enquete */
+            text-align: center;
+        }
+
+        .poll-section p {
+            font-weight: bold;
+        }
+
+        .poll-section button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #0B1742;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .poll-section button:hover {
+            background-color: #FF9A00;
+        }
+
+        .poll-result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #0B1742;
+        }
+
+        .back-btn {
+            background-color: #FF9A00;
+            border-radius: 7px;
+            border: none;
+            color: #fff;
+            margin-bottom: 50px;
+            width: 150px;
+            height: 30px;
+            margin-left: 40px;
+        }
+
+
+        .custom-hr {
+            border: none;
+            height: 1px;
+            background-color: #202020cc;
+            margin-bottom: 0px;
+            width: 210px;
+        }
+
+        .image-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .sent-image {
+            width: 100px;
+            height: auto;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            margin-top: 120px;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .caption {
+            margin: auto;
+            display: block;
+            text-align: center;
+            color: #ccc;
+            padding: 10px 0;
+        }
+
+        .nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        #prev-btn {
+            left: 10px;
+            margin-left: 450px;
+        }
+
+        #next-btn {
+            right: 10px;
+            margin-right: 450px;
+        }
+
+        .call-window {
+    color: black;
+    background-color: #f0f0f0; /* Cor de fundo suave */
+    padding: 30px;
+    border: solid 3px #ff9a00; /* Borda contrastante */
+    border-radius: 10px;
+    text-align: center;
+    width: 50vw;
+    height: 70vh; /* Aumenta a altura para acomodar a tela compartilhada */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none; /* Inicialmente escondida */
+    z-index: 100;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Sombra mais suave */
+    transition: transform 0.3s ease;
+    overflow: hidden; /* Esconde qualquer conteúdo que exceda os limites */
+}
+
+.screen-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Altura fixa para o vídeo */
+    border: 2px solid #ff9a00; /* Borda de destaque */
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0; /* Espaço entre o vídeo e os controles */
+    display: none; /* Inicialmente escondida */
+}
+
+.avatars {
+    display: flex;
+    justify-content: center; /* Centraliza os avatares */
+    align-items: center; /* Alinhamento vertical */
+    gap: 30px; /* Aumenta o espaço entre os avatares */
+    margin-bottom: 20px;
+    margin-top: 20vh; /* Começa no centro da tela */
+    transition: margin-top 0.5s ease; /* Transição suave ao mover os avatares */
+}
+
+.avatar {
+    width: 120px; 
+    height: 120px;
+    background-color: #484b52; 
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s;  /* Animação de zoom ao passar o mouse */
+}
+
+.screen-container {
+    position: relative;
+    width: 100%;
+    height: 300px; /* Altura fixa para o vídeo */
+    border: 2px solid #ff9a00; /* Borda de destaque */
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0; /* Espaço entre o vídeo e os controles */
+    display: none; /* Inicialmente escondida */
+}
+
+#shared-screen {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Mantém a proporção da imagem */
+    border-radius: 10px;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fundo semi-transparente */
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    opacity: 0; /* Inicialmente invisível */
+    transition: opacity 0.3s ease; /* Animação suave */
+}
+
+.controls button {
+    background-color: #ff9a00;
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.controls button:hover {
+    background-color: #ff9a00;
+    transform: translateY(-2px);
+}
+
+.desligo {
+    background-color: #f04747;
+}
+
+.desligo:hover {
+    background-color: #d33939;
+}
+
+.call-window h2 {
+    margin: 0 0 10px;
+    color: #000000; /* Texto branco para contraste */
+    font-size: 24px; /* Aumenta o tamanho da fonte do título */
+}
+
+.call-window p {
+    margin: 0 0 20px;
+    color: #000000; /* Cor de texto mais suave */
+    font-size: 16px; /* Aumenta o tamanho da fonte do texto */
+}
+
+
+.avatar:hover {
+    transform: scale(1.1); /* Aumenta o tamanho do avatar ao passar o mouse */
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Para manter a proporção da imagem */
+    border-radius: 50%;
+}
+
+.avatar.talking::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 130px; /* Aumenta o tamanho do círculo de fala */
+    height: 130px; /* Aumenta o tamanho do círculo de fala */
+    border: 2px solid #ff9a00; /* Cor de destaque para indicar que está falando */
+    border-radius: 50%;
+}
+
+.controls {
+    display: flex; /* Usa flexbox para alinhar os botões horizontalmente */
+    justify-content: center; /* Centraliza os botões */
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 20px; /* Adiciona espaço acima dos botões */
+}
+
+.controls button {
+    background-color: #ff9a00; /* Cor de fundo mais suave para os botões */
+    color: white;
+    border: none;
+    width: 50px; /* Largura do botão circular */
+    height: 50px; /* Altura do botão circular */
+    border-radius: 50%; /* Torna o botão circular */
+    cursor: pointer;
+    font-size: 16px; /* Tamanho da fonte para ícones ou texto */
+    transition: background-color 0.3s, transform 0.2s; /* Transições suaves */
+}
+
+.controls button:hover {
+    background-color: #ff9a00; /* Cor mais clara ao passar o mouse */
+    transform: translateY(-2px); /* Eleva o botão levemente */
+}
+
+.desligo {
+    background-color: #f04747; /* Vermelho para botão de encerrar */
+}
+
+.desligo:hover {
+    background-color: #d33939; /* Cor mais escura ao passar o mouse */
+}
+
+
+
+.avatar.talking {
+    position: relative;
+}
+
+.avatar.talking::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    width: 130px;
+    height: 130px;
+    border: 3px solid gold; 
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 10px gold;
+}
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-toggle" id="sidebarToggle">
+                <img src="img/architecture-1477103_1920.jpg" alt="Toggle Sidebar" class="toggle-icon">
+            </div>
+            <div class="sidebar-reveal" id="sidebarReveal" style="display: none;">
+                <img src="img/architecture-1477103_1920.jpg" alt="Pull to Reveal Sidebar" class="pull-icon">
+            </div>
+            <a href="index.html"><img src="img/latsflaubranco-removebg-preview.png" alt="Logo" class="logo"></a>
+            <div class="server-list">
+                <button class="server-btn active" data-server="server1">Arquiteto 1</button>
+                <button class="server-btn" data-server="server2">Arquiteto 2</button>
+                <button class="server-btn" data-server="server3">Arquiteto 3</button>
+            </div>
+            <div class="channel-list">
+                <h3>Channels</h3>
+                <ul>
+                    <li class="active" data-channel="#General">#Geral</li>
+                    <li data-channel="#Random">#Random</li>
+                    <li data-channel="#Voice-chat">#Voice-chat</li>
+                </ul>
+                <div style="margin-top: 50px;"></div>
+                <hr>
+                <!-- Novas Funcionalidades -->
+                <button class="features-toggle" onclick="toggleFeatures()">Status e Feedback</button>
+                <div class="features-area" id="featuresArea">
+                    <div class="feature">
+                        <h4>Status do Projeto</h4>
+                        <p>Acompanhe o progresso atual do projeto.</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 60%;"></div>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <h4>Feedback do Cliente</h4>
+                        <p>Deixe seu feedback sobre o projeto.</p>
+                        <div class="feedback-section">
+                            <h4>Feedback Recente:</h4>
+                            <p id="recent-feedback">Adoramos a nova abordagem de design!</p>
+                            <div class="feedback-input">
+                                <input type="text" id="feedback-input" placeholder="Escreva seu feedback...">
+                                <button id="submit-feedback">Enviar</button>
+                            </div>
+                            <div class="poll-section">
+                                <p><strong>Enquete:</strong> O que você achou?</p>
+                                <button onclick="voteFeedback(true)">👍 Positivo</button>
+                                <button onclick="voteFeedback(false)">👎 Negativo</button>
+                                <p id="vote-result" class="poll-result"></p>
+                                <div class="image-container">
+                                    <img src="img/PREDIO 1.jpg" alt="Imagem 1" class="sent-image">
+                                    <img src="img/PREDIO 2.jpg" alt="Imagem 2" class="sent-image">
+                                    <img src="img/PREDIO 3.jpg" alt="Imagem 3" class="sent-image">
+                                </div>
+                                <div id="image-modal" class="modal">
+                                    <span class="close" id="close-modal">&times;</span>
+                                    <img class="modal-content" id="modal-image" alt="Imagem Ampliada">
+                                    <div class="caption" id="caption"></div>
+                                    <button id="prev-btn" class="nav-btn">❮</button>
+                                    <button id="next-btn" class="nav-btn">❯</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div style="margin-bottom: 60px;">
+                <hr class="custom-hr">
+            </div>
+            <button class="back-btn" onclick="location.href='lobbyperfil1.html'">Voltar</button>
+
+
+        </aside>
+
+        <main class="chat-area">
+            <div class="chat-header">
+                <h2 id="current-channel">#Geral</h2>
+                <button id="ligacao-btn" class="ligacao-btn">Ligação</button>
+            </div>
+
+            <div class="ligacao-janela" id="ligacao-janela">
+                <h2>Ligando para o arquiteto...</h2>
+                <div class="ligacao-circulo">
+                    <img src="img/arquiteto.png" alt="Arquiteto">
+                </div>
+                <p>Aguarde um momento...</p>
+                <button class="fechar-ligacao-btn" id="fechar-ligacao-btn">Fechar</button>
+
+                <div class="call-window" id="call-window">
+                    <h2>Chamada com Arquiteto 1</h2>
+                    <p>Ligação em andamento...</p>
+                    <div class="avatars">
+                        <div class="avatar" data-user="user1">
+                            <img src="img/arquiteto.png" alt="User 1">
+                        </div>
+                        <div class="avatar" data-user="user2">
+                            <img src="img/download.png" alt="User 2">
+                        </div>
+                    </div>
+                    <div class="screen-container">
+                        <video id="shared-screen" autoplay></video>
+                    </div>
+                    <div class="controls">
+                        <button id="toggle-audio-btn">🔊</button>
+                        <button id="toggle-video-btn">📷</button>
+                        <button id="share-screen-btn" onclick="toggleScreenShare()">📲</button>
+                        <button class="end-call-btn desligo" id="end-call-btn">📞</button>
+                    </div>
+                </div>
+            
+            </div>
+
+            <div class="chat-content" id="chat-content-server1">
+                <div class="message">
+                    <p><strong>Bot:</strong></p>
+
+                    <p>Olá!</p>
+
+                    <p>Agradecemos profundamente por escolher a Tektõn para suas necessidades arquitetônicas. Este é um
+                        serviço exclusivo onde você tem a oportunidade de falar diretamente com o seu arquiteto pessoal.
+                    </p>
+
+                    <p>Se tiver qualquer dúvida ou precisar de assistência, nossa equipe está pronta para proporcionar a
+                        você um atendimento excepcional e personalizado.</p>
+
+                    <p>Estamos aqui para garantir que cada detalhe do seu projeto seja executado com a máxima precisão e
+                        qualidade. Sua satisfação é nossa prioridade.</p>
+                </div>
+                <div class="message">
+                    <p><strong>User1:</strong> Hello World in Server 1!</p>
+                </div>
+            </div>
+            <div class="chat-content" id="chat-content-server2" style="display: none;">
+                <div class="message">
+                    <p><strong>Bot:</strong></p>
+
+                    <p>Olá!</p>
+
+                    <p>Agradecemos profundamente por escolher a Tektõn para suas necessidades arquitetônicas. Este é um
+                        serviço exclusivo onde você tem a oportunidade de falar diretamente com o seu arquiteto pessoal.
+                    </p>
+
+                    <p>Se tiver qualquer dúvida ou precisar de assistência, nossa equipe está pronta para proporcionar a
+                        você um atendimento excepcional e personalizado.</p>
+
+                    <p>Estamos aqui para garantir que cada detalhe do seu projeto seja executado com a máxima precisão e
+                        qualidade. Sua satisfação é nossa prioridade.</p>
+
+                </div>
+                <div class="message">
+                    <p><strong>User2:</strong> Hello World in Server 2!</p>
+                </div>
+            </div>
+            <div class="chat-content" id="chat-content-server3" style="display: none;">
+                <div class="message">
+                    <p><strong>Bot:</strong></p>
+
+                    <p>Olá!</p>
+
+                    <p>Agradecemos profundamente por escolher a Tektõn para suas necessidades arquitetônicas. Este é um
+                        serviço exclusivo onde você tem a oportunidade de falar diretamente com o seu arquiteto pessoal.
+                    </p>
+
+                    <p>Se tiver qualquer dúvida ou precisar de assistência, nossa equipe está pronta para proporcionar a
+                        você um atendimento excepcional e personalizado.</p>
+
+                    <p>Estamos aqui para garantir que cada detalhe do seu projeto seja executado com a máxima precisão e
+                        qualidade. Sua satisfação é nossa prioridade.</p>
+
+                </div>
+                <div class="message">
+                    <p><strong>User3:</strong> Hello World in Server 3!</p>
+                </div>
+                <div class="audio-message">
+                    <p><strong>You:</strong> <em>Gravação de Áudio:</em></p>
+                    <audio controls>
+                        <source src="path/to/your/audio/file.wav" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <span class="recording-indicator" id="recording-indicator">Gravando...</span>
+                <input type="text" id="chat-input" placeholder="Escreva sua mensagem...">
+                <button id="send-btn">Enviar</button>
+                <button id="voice-btn">🎤</button>
+                <span class="timer" id="timer">00:00</span>
+
+            </div>
+
+
+    <script>
+// Simulação da função de detecção de voz
+function isUserTalking() {
+    // Aqui você implementaria a lógica real para detectar a voz do usuário
+    return Math.random() > 0.5; // Simulação: retorna true ou false aleatoriamente
+}
+
+function toggleMicrophone(userId) {
+    const avatar = document.querySelector(`.avatar[data-user="${userId}"]`);
+    if (!avatar) return;
+
+    // Alternar estado do microfone
+    const isMicrophoneOn = avatar.classList.toggle('microphone-on');
+
+    if (isMicrophoneOn) {
+        const intervalId = setInterval(() => {
+            if (isUserTalking()) {
+                avatar.classList.add('talking');
+            } else {
+                avatar.classList.remove('talking');
+            }
+        }, 1000);
+
+        // Salvar o intervalId no elemento para poder limpar depois
+        avatar.dataset.intervalId = intervalId;
+    } else {
+        // Desligar o microfone
+        avatar.classList.remove('talking');
+        clearInterval(avatar.dataset.intervalId);
+    }
+}
+
+// Adicionar event listeners aos avatares para alternar o microfone
+document.querySelectorAll('.avatar').forEach(avatar => {
+    avatar.addEventListener('click', () => {
+        const userId = avatar.getAttribute('data-user');
+        toggleMicrophone(userId);
+    });
+});
+
+
+
+
+
+
+
+
+        
+        let isScreenSharing = false; // Variável para rastrear o estado do compartilhamento de tela
+let currentStream; // Armazena o stream atual
+
+function toggleScreenShare() {
+    if (isScreenSharing) {
+        stopScreenShare(); // Se já está compartilhando, parar
+    } else {
+        startScreenShare(); // Se não está, iniciar o compartilhamento
+    }
+}
+
+function startScreenShare() {
+    navigator.mediaDevices.getDisplayMedia({ video: true })
+        .then((stream) => {
+            const videoElement = document.getElementById('shared-screen');
+            videoElement.srcObject = stream;
+            currentStream = stream; // Armazena o stream atual
+
+            // Exibir a janela de chamada e a tela compartilhada
+            document.querySelector('.call-window').style.display = 'block';
+            document.querySelector('.screen-container').style.display = 'block';
+
+            // Move os avatares para cima
+            document.querySelector('.avatars').style.marginTop = '10vh';
+
+            isScreenSharing = true; // Atualiza o estado
+
+            // Adicionar um evento para parar o compartilhamento de tela quando o usuário o encerrar
+            stream.getTracks().forEach(track => {
+                track.addEventListener('ended', stopScreenShare);
+            });
+        })
+        .catch((error) => {
+            console.error('Erro ao compartilhar a tela: ', error);
+        });
+}
+
+function stopScreenShare() {
+    if (currentStream) {
+        currentStream.getTracks().forEach(track => track.stop());
+        currentStream = null; // Limpa o stream atual
+    }
+
+    const videoElement = document.getElementById('shared-screen');
+    videoElement.srcObject = null; // Para o vídeo
+
+    // Esconder a tela compartilhada
+    document.querySelector('.screen-container').style.display = 'none';
+
+    // Restaura a posição dos avatares
+    document.querySelector('.avatars').style.marginTop = '20vh';
+
+    isScreenSharing = false; // Atualiza o estado
+}
+
+
+
+             const audioBtn = document.getElementById('toggle-audio-btn');
+        const videoBtn = document.getElementById('toggle-video-btn');
+        const screenBtn = document.getElementById('share-screen-btn');
+        const endCallBtn = document.getElementById('end-call-btn');
+        let audioEnabled = false;
+        let videoEnabled = false;
+
+        audioBtn.addEventListener('click', () => {
+            audioEnabled = !audioEnabled;
+            audioBtn.textContent = audioEnabled ? '🔇 ' : '🔊 ';
+        });
+
+        videoBtn.addEventListener('click', () => {
+            videoEnabled = !videoEnabled;
+            videoBtn.textContent = videoEnabled ? '📵 ' : '📷 ';
+        });
+
+        screenBtn.addEventListener('click', () => {
+            alert('Compartilhamento de tela ativado!');
+        });
+
+        endCallBtn.addEventListener('click', () => {
+            alert('Chamada encerrada');
+        });
+
+
+
+
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+    const ligacaoBtn = document.getElementById('ligacao-btn');
+    const callWindow = document.getElementById('call-window');
+    const endCallBtn = document.getElementById('end-call-btn');
+
+    ligacaoBtn.addEventListener('click', function () {
+        // Exibir janela de ligação
+        alert("Ligando... Aguarde 10 segundos.");
+        setTimeout(() => {
+            callWindow.style.display = 'block'; // Mostra a janela de chamada
+        }, 1000); // Espera 10 segundos
+    });
+
+    endCallBtn.addEventListener('click', function () {
+        callWindow.style.display = 'none'; // Esconde a janela de chamada
+    });
+});
+
+        let isDragging = false;
+        let startX;
+        let startWidth;
+
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebarReveal = document.getElementById('sidebarReveal');
+
+        // Função para alternar a visibilidade da sidebar
+        function toggleSidebar() {
+            sidebar.classList.toggle('hidden');
+            sidebarReveal.style.display = sidebar.classList.contains('hidden') ? 'block' : 'none'; // Mostra ou oculta a imagem de puxar
+        }
+
+        // Evento para alternar a sidebar ao clicar no botão
+        sidebarToggle.addEventListener('click', toggleSidebar);
+
+        // Eventos para arrastar a sidebar
+        sidebar.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startWidth = parseInt(window.getComputedStyle(sidebar).width);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+
+            const dx = e.clientX - startX;
+            const newWidth = startWidth + dx; // Inverter a direção do arrasto
+
+            // Limite de largura
+            if (newWidth > 0 && newWidth < 250) { // Ajuste o limite de largura conforme necessário
+                sidebar.style.width = `${newWidth}px`;
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+            const currentWidth = parseInt(window.getComputedStyle(sidebar).width);
+
+            if (currentWidth <= 0) {
+                sidebar.classList.add('hidden'); // Oculta a sidebar se a largura for menor ou igual a 0
+                sidebarReveal.style.display = 'block'; // Mostra a imagem de puxar
+            } else {
+                sidebar.classList.remove('hidden'); // Mostra a sidebar se a largura for maior que 0
+                sidebarReveal.style.display = 'none'; // Oculta a imagem de puxar
+            }
+        });
+
+        // Evento para puxar a sidebar de volta ao clicar na imagem
+        sidebarReveal.addEventListener('click', () => {
+            sidebar.classList.remove('hidden'); // Mostra a sidebar
+            sidebarReveal.style.display = 'none'; // Oculta a imagem de puxar
+        });
+
+
+
+
+
+
+
+
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const chatInput = document.getElementById('chat-input');
+            const sendBtn = document.getElementById('send-btn');
+            const voiceBtn = document.getElementById('voice-btn');
+            const recordingIndicator = document.getElementById('recording-indicator');
+            const timer = document.getElementById('timer');
+            let activeChatContent = document.getElementById('chat-content-server1'); // default active server content
+            let recordingInterval;
+            let seconds = 0;
+
+            function sendMessage(messageText) {
+                if (messageText.trim() !== "") {
+                    const messageElement = document.createElement('div');
+                    messageElement.classList.add('message');
+                    messageElement.innerHTML = `<p><strong>You:</strong> ${messageText}</p>`;
+                    activeChatContent.appendChild(messageElement);
+                    chatInput.value = "";
+                    activeChatContent.scrollTop = activeChatContent.scrollHeight; // Scroll to the bottom
+                }
+            }
+
+            chatInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    sendMessage(chatInput.value);
+                }
+            });
+
+            sendBtn.addEventListener('click', function () {
+                sendMessage(chatInput.value);
+            });
+
+
+            let mediaRecorder;
+            let audioChunks = [];
+
+            voiceBtn.addEventListener('click', function () {
+                if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                    alert("Seu navegador não possui suporte de audio.");
+                    return;
+                }
+
+                if (mediaRecorder && mediaRecorder.state === "recording") {
+                    mediaRecorder.stop();
+                    recordingIndicator.classList.remove('active');
+                    timer.classList.remove('active');
+                    clearInterval(recordingInterval);
+                    seconds = 0;
+                    timer.textContent = "00:00";
+                } else {
+                    navigator.mediaDevices.getUserMedia({ audio: true })
+                        .then(function (stream) {
+                            mediaRecorder = new MediaRecorder(stream);
+                            mediaRecorder.start();
+
+                            recordingIndicator.classList.add('active');
+                            timer.classList.add('active');
+
+                            recordingInterval = setInterval(function () {
+                                seconds++;
+                                const minutes = Math.floor(seconds / 60);
+                                const secs = seconds % 60;
+                                timer.textContent = `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                            }, 1000);
+
+                            mediaRecorder.ondataavailable = function (event) {
+                                audioChunks.push(event.data);
+                            };
+
+                            mediaRecorder.onstop = function () {
+                                const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                                const audioUrl = URL.createObjectURL(audioBlob);
+                                const audioMessageElement = document.createElement('div');
+                                audioMessageElement.classList.add('audio-message');
+                                audioMessageElement.innerHTML = `
+                                    <p><strong>You:</strong> <em>Gravação de Áudio:</em></p>
+                                    <audio controls>
+                                        <source src="${audioUrl}" type="audio/wav">
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                `;
+                                activeChatContent.appendChild(audioMessageElement);
+                                activeChatContent.scrollTop = activeChatContent.scrollHeight;
+                                audioChunks = [];
+                            };
+                        })
+                        .catch(function (err) {
+                            console.error("Error accessing microphone: ", err);
+                        });
+                }
+            });
+
+            // Handle server buttons
+            const serverButtons = document.querySelectorAll('.server-btn');
+            serverButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    serverButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const serverId = button.getAttribute('data-server');
+                    document.querySelectorAll('.chat-content').forEach(content => content.style.display = 'none');
+                    document.getElementById(`chat-content-${serverId}`).style.display = 'block';
+                    activeChatContent = document.getElementById(`chat-content-${serverId}`);
+                });
+            });
+
+            // Handle channel clicks
+            const channelItems = document.querySelectorAll('.channel-list li');
+            channelItems.forEach(item => {
+                item.addEventListener('click', function () {
+                    channelItems.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    const activeChannel = item.getAttribute('data-channel');
+                    document.getElementById('current-channel').textContent = activeChannel;
+                });
+            });
+
+            // Handle ligação button
+            const ligacaoBtn = document.getElementById('ligacao-btn');
+            const ligacaoJanela = document.getElementById('ligacao-janela');
+            const fecharLigacaoBtn = document.getElementById('fechar-ligacao-btn');
+            const circuloEsquerda = document.getElementById('circulo-esquerda');
+
+            ligacaoBtn.addEventListener('click', function () {
+                ligacaoJanela.style.display = 'block';
+                circuloEsquerda.style.animationPlayState = 'running'; // Start animation
+            });
+
+            fecharLigacaoBtn.addEventListener('click', function () {
+                ligacaoJanela.style.display = 'none';
+                circuloEsquerda.style.animationPlayState = 'paused'; // Pause animation
+            });
+
+            // Handle ligação som
+            const ligacaoSom = document.getElementById('ligacao-som');
+
+            // This is for Bootstrap modal events; ensure Bootstrap is loaded if you use this
+            if (ligacaoJanela) {
+                ligacaoJanela.addEventListener('shown.bs.modal', () => {
+                    ligacaoSom.play();
+                });
+
+                fecharLigacaoBtn.addEventListener('click', () => {
+                    ligacaoSom.pause();
+                    ligacaoSom.currentTime = 0;
+                });
+            }
+        });
+
+        function toggleFeatures() {
+            const featuresArea = document.getElementById('featuresArea');
+            if (featuresArea.style.display === 'none' || featuresArea.style.display === '') {
+                featuresArea.style.display = 'block';
+            } else {
+                featuresArea.style.display = 'none';
+            }
+        }
+
+        document.getElementById('submit-feedback').onclick = function () {
+            const feedbackInput = document.getElementById('feedback-input');
+            const recentFeedback = document.getElementById('recent-feedback');
+            recentFeedback.textContent = feedbackInput.value || "Feedback vazio. Por favor, escreva algo.";
+            feedbackInput.value = '';
+        };
+
+        let positiveVotes = 0;
+        let negativeVotes = 0;
+
+        function voteFeedback(isPositive) {
+            if (isPositive) {
+                positiveVotes++;
+            } else {
+                negativeVotes++;
+            }
+            document.getElementById('vote-result').textContent = `👍 ${positiveVotes} | 👎 ${negativeVotes}`;
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+            const images = document.querySelectorAll('.sent-image');
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-image');
+            const captionText = document.getElementById('caption');
+            const closeModal = document.getElementById('close-modal');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+
+            let currentIndex = 0;
+
+            // Função para abrir o modal
+            images.forEach((img, index) => {
+                img.addEventListener('click', function () {
+                    currentIndex = index;
+                    openModal(img.src, img.alt);
+                });
+            });
+
+            // Função para abrir o modal
+            function openModal(src, alt) {
+                modal.style.display = 'block';
+                modalImg.src = src;
+                captionText.innerHTML = alt;
+            }
+
+            // Fechar o modal
+            closeModal.onclick = function () {
+                modal.style.display = 'none';
+            }
+
+            // Navegação entre imagens
+            prevBtn.onclick = function () {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+                updateModalImage();
+            }
+
+            nextBtn.onclick = function () {
+                currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+                updateModalImage();
+            }
+
+            function updateModalImage() {
+                const img = images[currentIndex];
+                modalImg.src = img.src;
+                captionText.innerHTML = img.alt; // Corrected the variable name
+            }
+        });
+    </script>
+</body>
+
+</html>

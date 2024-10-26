@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esqueci Minha Senha - Tektõn</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0B1742;
+            --secondary-color: #FF9A00;
+            --background-color: #FFFFFF;
+            --text-color: #FFFFFF;
+            --error-color: #FF4D4D;
+            --success-color: #28A745;
+            --font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .background {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(to bottom, var(--primary-color) 50%, url('https://example.com/your-image.jpg') no-repeat center center / cover);
+        }
+
+        .container {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            padding: 30px;
+            text-align: center;
+            margin: auto;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 12px 40px 12px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            position: relative;
+        }
+
+        input[type="email"]::placeholder {
+            color: #999;
+        }
+
+        input[type="email"]:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+
+        .icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+
+        button {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #e68a00;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 14px;
+            display: none; /* Oculta por padrão */
+        }
+
+        .error {
+            color: var(--error-color);
+        }
+
+        .success {
+            color: var(--success-color);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                max-width: 250px;
+            }
+        }
+
+        /* Estilo do Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width:  100%;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--background-color);
+            padding: 20px;
+            border-radius: 8px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .modal-content h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .modal-content p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content button {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .modal-content button:hover {
+            background-color: #e68a00;
+        }
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="container" role="main">
+            <header>
+                <h1>Esqueci Minha Senha</h1>
+            </header>
+            <section>
+                <p>Insira seu endereço de e-mail abaixo e enviaremos instruções para redefinir sua senha.</p>
+                <form id="reset-password-form" action="/reset-password" method="post" aria-labelledby="reset-password-form">
+                    <input type="email" name="email" id="email" placeholder="Seu e-mail" required aria-required="true">
+                    <i class="fas fa-envelope icon"></i>
+                    <button type="submit">Enviar</button>
+                </form>
+                <div id="message" class="message"></div>
+            </section>
+            <footer class="footer">
+                <p><a href="/login">Voltar ao Login</a></p>
+            </footer>
+
+            <!-- Modal de Sucesso -->
+            <div class="modal" id="success-modal">
+                <div class="modal-content">
+                    <h2>Sucesso!</h2>
+                    <p>E-mail enviado com sucesso!</p>
+                    <button id="close-modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('reset-password-form');
+        const emailInput = document.getElementById('email');
+        const messageDiv = document.getElementById('message');
+        const successModal = document.getElementById('success-modal');
+        const closeModalButton = document.getElementById('close-modal');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+
+            if (!validateEmail(email)) {
+                showMessage('Erro: Insira um e-mail válido.', 'error');
+                return;
+            }
+
+            // Envia o formulário para o servidor
+            // ...
+
+            showMessage('E-mail enviado com sucesso!', 'success');
+            showSuccessModal();
+        });
+
+        function validateEmail(email) {
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            return emailRegex.test(email);
+        }
+
+        function showMessage(message, type) {
+            messageDiv.textContent = message;
+            messageDiv.className = `message ${type}`;
+            messageDiv.style.display = 'block';
+
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        function showSuccessModal() {
+            successModal.classList.add('show');
+        }
+
+        closeModalButton.addEventListener('click', () => {
+            successModal.classList.remove('show');
+        });
+    </script>
+</body>
+</html>

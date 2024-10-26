@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tektõn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><img src="img/latsflaubranco-removebg-preview.png" alt=""></div>
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#sobre">Sobre o app</a></li>
+                <li><a href="#Propos">Propostas</a></li>
+                <li><a href="index.html">Voltar ao site</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Projetos Arquitetônicos na palma da sua mão!</h1>
+                <p>DÊ UM PASSO EM DIREÇÃO AO FUTURO, DÊ UM PASSO COM A TEKTÕN.</p>
+                <a href="download/app-release.apk" class="download-button" download>Baixe Nossa Versão Beta para Android</a>
+            </div>
+            <div class="hero-image">
+                <img src="img/Imagem do WhatsApp .jpg" alt="Prédio com varandas">
+            </div>
+        </section>
+    </main>
+    
+   
+    
+    <div style="border: solid 3px #fff; width: 100%; margin-top: 60px; background-color: #ffff; margin-bottom: 60px;">
+        <div id="sobre">
+        <section class="about">
+            <div class="about-text">
+                <h2>Sobre o App da Tektõn</h2>
+                <p>
+                    O aplicativo da Tektõn é a maneira mais inovadora e prática para você acompanhar seus projetos, onde quer que esteja. Com ele, você tem acesso a informações atualizadas, pode se comunicar com a equipe e receber suporte a qualquer hora.
+                </p>
+            </div>
+            <div class="about-content">
+                <div class="app-image2">
+                    <img src="img/Cópia de Design sem nome (3.1).png" alt="Imagem do aplicativo no celular" style="width: 600px;">
+                </div>
+                
+                <div class="app-features">
+                    <h3>Sobre o App</h3>
+                    <ul>
+                        <li>✅ Interface intuitiva</li>
+                        <li>✅ Seus projetos com fácil acesso</li>
+                        <li>✅ Cabe na palma da sua mão</li>
+                        <li>✅ Fácil de usar</li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+        </section>
+    </div>
+    <div style="width: 100%; margin-top: -70px; background-color: #ffffff;"> 
+        <section class="proposals-section">
+            <div id="Propos">
+            <div class="proposals-content">
+                <h2>Propostas</h2>
+                <ul class="proposal-list">
+                    <li>✅ Variedade de funções</li>
+                    <li>✅ Suporte 24h</li>
+                    <li>✅ Fale com seu arquiteto onde estiver</li>
+                    <li>✅ Navegação Simplificada</li>
+                    <li>✅ Acessibilidades</li>
+                    <li>✅ Alta Confiabilidade</li>
+                    <li>✅ Comunicação eficiente</li>
+                </ul>
+            </div>
+        </div>
+            <div class="app-image">
+                <img src="img/tela2.png" alt="Imagem do aplicativo no celular">
+            </div>
+           
+        </section>
+    </div>
+</body>
+</html>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #ffecb9; 
+    color: #333; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; 
+}
+
+header {
+    width: 100%;
+    margin-bottom: 110px;
+}
+
+nav {
+    max-width: 1200px; 
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.logo img {
+    width: 150px; 
+    height: auto; 
+}
+
+nav ul {
+    list-style: none; 
+    display: flex;
+    gap: 30px; 
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #4a4a4a;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: #ff9a00; 
+}
+
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 100px 60px; 
+    max-width: 1200px; 
+    margin: 40px auto;
+    background-color: #ffcc80; 
+    border-radius: 30px; 
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+    position: relative;
+    margin-bottom: 130px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 15%; 
+    left: 60%; 
+    width: 500px; 
+    height: 500px; 
+    background-color: rgba(255, 154, 0, 0.3);
+    border-radius: 30px;
+    transform: rotate(-15deg); 
+    z-index: -1; 
+}
+
+.hero-content {
+    max-width: 600px; 
+}
+
+.hero-content h1 {
+    font-size: 42px; 
+    color: #333; 
+    margin-bottom: 15px; 
+    line-height: 1.3;
+}
+
+.hero-content p {
+    color: #666; 
+    font-size: 24px; 
+    margin-bottom: 40px; 
+}
+
+.download-button {
+    padding: 16px 40px; 
+    background-color: #ff9a00; 
+    color: #fff; 
+    text-decoration: none;
+    border-radius: 10px; 
+    font-weight: bold; 
+    transition: background-color 0.3s, box-shadow 0.3s; 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); 
+}
+
+.download-button:hover {
+    background-color: #e68a00; 
+}
+
+.hero-image {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-image img {
+    width: 500px; 
+    height: auto; 
+    border-radius: 30px; 
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.3s; 
+}
+
+.hero-image img:hover {
+    transform: scale(1.05); 
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        padding: 40px 20px; 
+    }
+
+    .hero-image img {
+        width: 100%; 
+        max-width: 300px; 
+    }
+
+    .hero-content h1 {
+        font-size: 28px; 
+    }
+
+    .hero-content p {
+        font-size: 18px;
+    }
+
+    nav ul {
+        flex-direction: column; 
+        gap: 15px;
+    }
+}
+
+.about {
+    max-width: 1000px;
+    padding: 20px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.about-text {
+    margin-bottom: 30px;
+}
+
+.about-text h2 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.about-text p {
+    font-size: 18px;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.about-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 40px;
+}
+
+.app-image img {
+    width: 1000px;
+    height: auto;
+    margin-left: 250px;
+}
+.app-image2 img {
+    width: 900px;
+    height: auto;
+    margin-left: -100px;
+}
+
+.app-features {
+    max-width: 900px;
+    text-align: left;
+}
+
+.app-features h3 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.app-features ul {
+    list-style: none;
+    padding: 0;
+}
+
+.app-features li {
+    background-color: #fdf6e3;
+    padding: 12px 16px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.app-features li::before {
+    content: '✔️';
+    margin-right: 8px;
+    color: #333;
+}
+
+@media (max-width: 768px) {
+    .about-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .app-features {
+        text-align: center;
+    }
+}
+
+.proposals-section {
+    max-width: 1200px;
+    display: flex;
+    gap: 40px;
+    padding: 60px 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin: 40px auto;
+}
+
+.proposals-content h2 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+    margin-left: 150px;
+}
+
+.proposal-list {
+    list-style: none;
+    margin-left: 150px;
+}
+
+.proposal-list li {
+    padding: 12px 0;
+    font-size: 18px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.proposal-list li::before {
+    content: '✔️';
+    margin-right: 8px;
+    color: #FF9A00;
+}
+
+.app-image img {
+    width: 280px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .proposals-section {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .proposals-content, .app-image img {
+        text-align: center;
+    }
+}
+
+
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+section {
+    animation: fadeIn 0.8s ease forwards;
+}
+.download-button {
+        transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    .download-button:hover {
+        background-color: #e68a00; 
+        transform: scale(1.05);
+    }
+
+    nav ul li a {
+        transition: color 0.3s, transform 0.3s;
+    }
+
+    nav ul li a:hover {
+        color: #ff9a00; 
+        transform: translateY(-3px);
+    }
+
+    .hero-image img {
+        transition: transform 0.3s;
+    }
+
+    .hero-image img:hover {
+        transform: scale(1.05);
+    }
+
+    .app-image img, .app-image2 img {
+        transition: transform 0.3s;
+    }
+
+    .app-image img:hover, .app-image2 img:hover {
+        transform: scale(1.05);
+    }
+
+    .proposal-list li {
+        opacity: 0;
+        transform: translateY(10px);
+        animation: fadeIn 0.5s forwards;
+    }
+
+    .proposal-list li:nth-child(1) { animation-delay: 0.1s; }
+    .proposal-list li:nth-child(2) { animation-delay: 0.2s; }
+    .proposal-list li:nth-child(3) { animation-delay: 0.3s; }
+    .proposal-list li:nth-child(4) { animation-delay: 0.4s; }
+    .proposal-list li:nth-child(5) { animation-delay: 0.5s; }
+    .proposal-list li:nth-child(6) { animation-delay: 0.6s; }
+    .proposal-list li:nth-child(7) { animation-delay: 0.7s; }
+
+    .about-text h2, .proposals-content h2 {
+        opacity: 0;
+        transform: translateY(-20px);
+        animation: fadeIn 0.6s forwards;
+    }
+
+    .about-text h2 { animation-delay: 0.2s; }
+    .proposals-content h2 { animation-delay: 0.4s; }
+</style>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Bot - Chat 1</title>
+<style>
+  #chatbot {
+    width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ff9a00;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #chatbot p {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  #options {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .option {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ddd;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .option:hover {
+    background-color: #eee;
+  }
+
+  /* Estilo para os quadrados */
+  .square-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .square {
+    margin-right: 20px;
+    margin-top: 550px;
+    width: 200px;
+    height: 200px;
+    background-color: rgb(199, 208, 211);
+    border-radius: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div id="chatbot">
+  <p>Bem-vindo ao Chat Bot da Tektõn!</p>
+  <p id="question">1. Qual é o seu estilo de vida?</p>
+  <ul id="options"></ul>
+</div>
+
+<!-- Quadrados adicionados -->
+<div class="square-container">
+  <div class="square"></div>
+  <div class="square"></div>
+  <div class="square"></div>
+  <div class="square"></div>
+</div>
+
+<script>
+  const chatbot = document.getElementById('chatbot');
+  const question = document.getElementById('question');
+  const options = document.getElementById('options');
+  let answers = [];
+
+  function askQuestion(text) {
+    question.innerText = text;
+    options.innerHTML = '';
+  }
+
+  function addOption(text, answer) {
+    const option = document.createElement('button');
+    option.classList.add('option');
+    option.innerText = text;
+    option.dataset.answer = answer;
+    option.addEventListener('click', () => {
+      answers.push(answer);
+      const nextQuestionIndex = answers.length - 1;
+      if (nextQuestionIndex < questions.length) {
+        const nextQuestion = questions[nextQuestionIndex];
+        askQuestion(nextQuestion.text);
+        nextQuestion.options.forEach(option => addOption(option.text, option.answer));
+      } else {
+        const result = getResult(answers);
+        chatbot.innerHTML = `<p>O estilo de casa que melhor se adapta a você é: ${result.text}</p>`;
+        const nextChatButton = document.createElement('button');
+        nextChatButton.innerText = 'Próximo Chat';
+        nextChatButton.addEventListener('click', () => {
+          window.location.href = 'chat2.html';
+        });
+        chatbot.appendChild(nextChatButton);
+      }
+    });
+    options.appendChild(option);
+  }
+
+  const questions = [
+    {
+      text: '1. Qual é o seu estilo de vida?',
+      options: [
+        { text: 'Ativo e social', answer: 'A' },
+        { text: 'Calmo e reservado', answer: 'B' },
+        { text: 'Profissional e organizado', answer: 'C' },
+        { text: 'Criativo e artístico', answer: 'D' },
+      ],
+    },
+    {
+      text: '2. Qual é o seu orçamento para decoração?',
+      options: [
+        { text: 'Baixo', answer: 'A' },
+        { text: 'Médio', answer: 'B' },
+        { text: 'Alto', answer: 'C' },
+        { text: 'Não tenho um orçamento específico', answer: 'D' },
+      ],
+    },
+    {
+      text: '3. Qual é o seu estilo de decoração preferido?',
+      options: [
+        { text: 'Moderno e minimalista', answer: 'A' },
+        { text: 'Clássico e tradicional', answer: 'B' },
+        { text: 'Rústico e natural', answer: 'C' },
+        { text: 'Eclético e colorido', answer: 'D' },
+      ],
+    },
+  ];
+
+  askQuestion(questions[0].text);
+  questions[0].options.forEach(option => addOption(option.text, option.answer));
+
+  function getResult(answers) {
+    let result = '';
+
+    // Analisar as respostas e determinar o resultado com base nelas
+    // Aqui estou apenas fornecendo algumas regras de exemplo
+    const estiloVida = answers[0];
+    const orcamento = answers[1];
+    const estiloDecoracao = answers[2];
+
+    if (estiloVida === 'A' && orcamento === 'A' && estiloDecoracao === 'A') {
+      result = 'Estilo A';
+    } else if (estiloVida === 'B' && orcamento === 'B' && estiloDecoracao === 'B') {
+      result = 'Estilo B';
+    } else if (estiloVida === 'C' && orcamento === 'C' && estiloDecoracao === 'C') {
+      result = 'Estilo C';
+    } else if (estiloVida === 'D' && orcamento === 'D' && estiloDecoracao === 'D') {
+      result = 'Estilo D';
+    } else {
+      result = 'Estilo padrão';
+    }
+
+    // Retornar o resultado como um objeto
+    return { text: result };
+  }
+</script>
+
+</body>
+</html>
+

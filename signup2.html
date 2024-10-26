@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Tektõn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .signup-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .signup-container h2 {
+            margin-bottom: 20px;
+            color: #0b1742;
+        }
+        .signup-container form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            width: 100%;
+            text-align: left;
+        }
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: block;
+            color: #0b1742;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .form-group input[type="checkbox"] {
+            width: auto;
+        }
+        .signup-container button {
+            background-color: #ff9a00;
+            color: #ffffff;
+            border: none;
+            padding: 10px 16px; /* Aumentei o padding para melhor conforto */
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 20px;
+            width: 100%; /* Tamanho padrão para o botão principal */
+        }
+        .signup-container button:hover {
+            background-color: #e88a00;
+            transform: translateY(-2px);
+        }
+        .signup-container button:active {
+            transform: translateY(2px);
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 10px;
+            background-color: #ff9a00;
+            width: 0;
+            transition: width 0.3s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .step-icon {
+            background-color: #ff9a00;
+            color: #ffffff;
+            border-radius: 50%;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+        }
+        .form-navigation {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between; /* Espaço entre os botões */
+            width: 100%;
+            margin-top: 20px; /* Adiciona margem acima dos botões */
+        }
+        .form-navigation button {
+            width: 100%; /* Tamanho igual para ambos os botões */
+        }
+        .centered {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-left: 20px;
+        }
+        .NoIdea{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between; /* Espaço entre os botões */
+            width: 100%;
+            margin-top: 20px;
+
+
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <h2>Crie sua conta na Tektõn</h2>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <form id="signupForm">
+            <div class="form-step active" id="step1">
+                <div class="form-group">
+                    <label for="name">Nome Completo</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirmar Senha</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+            </div>
+            
+            <div class="form-step" id="step2">
+                <div class="form-group">
+                    <label for="phone">Telefone</label>
+                    <input type="tel" id="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="address">Endereço</label>
+                    <input type="text" id="address" required>
+                </div>
+                <div class="form-group">
+                    <label for="dob">Data de Nascimento</label>
+                    <input type="date" id="dob" required>
+                </div>
+            </div>
+         
+            <div class="form-step" id="step3">
+                <div class="form-group">
+                    <label for="language">Idioma Preferido</label>
+                    <select id="language" required>
+                        <option value="pt">Português</option>
+                        <option value="en">Inglês</option>
+                        <option value="es">Espanhol</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="theme">Tema</label>
+                    <select id="theme" required>
+                        <option value="light">Claro</option>
+                        <option value="dark">Escuro</option>
+                        <option value="blue">Azul</option>
+                        <option value="green">Verde</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="notifications" checked>
+                        Receber Notificações
+                    </label>
+                </div>
+            </div>
+       
+            <div class="form-navigation">
+                <button type="button" id="prevBtn" onclick="changeStep(-1)" style="display: none;">Voltar</button>
+                <div class="centered">
+                    <button type="button" id="nextBtn" onclick="changeStep(1)">Próximo</button>
+                </div>
+            </div>
+            <div class="NoIdea">
+            <div class="form-navigation" id="finalNavigation" style="display: none;">
+              
+               <a href="lobbyperfil1.html"> <button type="submit" id="submitBtn" >Criar Conta</button></a>
+            </div>
+        </div>
+        </form>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const formSteps = document.querySelectorAll('.form-step');
+        const progressBar = document.getElementById('progressBar');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const finalNavigation = document.getElementById('finalNavigation');
+
+        function updateStep() {
+            formSteps.forEach((step, index) => {
+                step.classList.toggle('active', index === currentStep);
+            });
+            progressBar.style.width = `${(currentStep / (formSteps.length - 1)) * 100}%`;
+
+            if (currentStep === 0) {
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-block';
+                finalNavigation.style.display = 'none';
+            } else if (currentStep === formSteps.length - 1) {
+                prevBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'none';
+                finalNavigation.style.display = 'flex'; // Exibe a navegação final
+            } else {
+                prevBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'inline-block';
+                finalNavigation.style.display = 'none'; // Oculta a navegação final
+            }
+        }
+
+        function changeStep(step) {
+            if (step === 1 && !validateStep()) return;
+            currentStep += step;
+            updateStep();
+        }
+
+        function validateStep() {
+            const inputs = formSteps[currentStep].querySelectorAll('input');
+            let valid = true;
+            inputs.forEach(input => {
+                if (!input.checkValidity()) {
+                    valid = false;
+                    input.reportValidity();
+                }
+            });
+            return valid;
+        }
+
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita o envio do formulário
+            // Aqui você pode adicionar lógica para processar os dados do formulário, se necessário.
+
+            // Redireciona para a nova página
+            window.location.href = 'p1.html';
+        });
+
+        updateStep(); // Inicializa o primeiro passo
+    </script>
+</body>
+</html>

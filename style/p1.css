@@ -1,0 +1,48 @@
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+border: solid 2px #FF9A00;
+margin-left: 500px;
+margin-right: 500px;
+margin-top: 200px;
+border-radius: 20px;
+
+}
+
+header {
+background-color: #ff9a00;
+color: #fff;
+padding: 20px;
+text-align: center;
+}
+
+main {
+padding: 20px;
+}
+
+form {
+margin-bottom: 20px;
+}
+
+label {
+display: block;
+margin-bottom: 10px;
+}
+
+select {
+width: 100%;
+padding: 10px;
+margin-bottom: 20px;
+}
+
+#filter-btn {
+background-color: #ff9a00;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+width: 50%; 
+
+}

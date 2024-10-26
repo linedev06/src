@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat Bot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f3f3f3;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .imagem-pequena {
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 310px;
+      right: 0;
+    }
+
+    .chat-container {
+      margin-top: -50px;
+      width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+    }
+
+    .chat-messages {
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+    }
+
+    .message {
+      margin-bottom: 10px;
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .message-bot {
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      padding: 10px;
+      color: #333;
+    }
+
+    .message-user {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 10px;
+      color: #007bff;
+    }
+
+    .chat-input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      border: none;
+      border-top: 1px solid #ccc;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .btn-send {
+      width: 100px;
+      padding: 10px;
+      border: none;
+      background-color: #ff9a00;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn-send:hover {
+      background-color: #ffc062;
+    }
+
+    .options {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .option {
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .option:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="chat-container" style="position: relative;">
+    <div class="chat-messages" id="chat-messages">
+      <div class="message message-bot">
+        Olá! Eu sou o Bot-Tektõn. Estou aqui para ajudá-lo com seu projeto de decoração. Qual foi o resultado do seu primeiro questionário? (Estilo A, B, C ou Padrão)
+        <div class="options">
+          <div class="option" onclick="sendMessage('Estilo A')">Estilo A</div>
+          <div class="option" onclick="sendMessage('Estilo B')">Estilo B</div>
+          <div class="option" onclick="sendMessage('Estilo C')">Estilo C</div>
+          <div class="option" onclick="sendMessage('Padrão')">Padrão</div>
+        </div>
+      </div>
+    </div>
+    <input type="text" class="chat-input" id="user-input" placeholder="Digite sua resposta...">
+    <button class="btn-send" onclick="sendMessage()">Enviar</button>
+    <img src="img/latsflaubranco-removebg-preview.png" alt="" class="imagem-pequena">
+  </div>
+  
+  <script>
+    const chatMessages = document.getElementById('chat-messages');
+    const userInput = document.getElementById('user-input');
+  
+    // Adiciona um evento de tecla ao campo de entrada do usuário
+    userInput.addEventListener('keyup', function (event) {
+      // Verifica se a tecla pressionada é "Enter" (código 13)
+      if (event.keyCode === 13) {
+        // Chama a função sendMessage() quando "Enter" é pressionado
+        sendMessage();
+      }
+    });
+  
+    // Função para adicionar uma mensagem ao chat
+    function addMessage(message, sender) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', sender === 'user' ? 'message-user' : 'message-bot');
+      const senderName = messageDiv.innerHTML = `<b>${sender === 'user' ? 'Você' : 'Bot-Tektõn'}:</b> ${message}`;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
+    }
+  
+    function sendMessage(message = userInput.value) {
+      addMessage(message, 'user');
+      userInput.value = '';
+      processMessage(message);
+    }
+    let currentQuestionnaire = 1;
+
+function processMessage(message) {
+  console.log('Message:', message);
+  // Process the message and respond accordingly
+  if (currentQuestionnaire === 1) {
+    if (message.includes('Estilo A') || message.includes('Estilo B') || message.includes('Estilo C') || message.includes('Padrão')) {
+      addMessage('Qual foi o resultado do seu segundo questionário? (Estilo A, Estilo B, Estilo C ou Padrão)', 'bot');
+      generateQuestionnaire2();
+      currentQuestionnaire = 2;
+    } else {
+      addMessage('Desculpe, não entendi sua mensagem. Por favor, tente novamente!', 'bot');
+    }
+  } else if (currentQuestionnaire === 2) {
+    if (message.includes('Estilo A') || message.includes('Estilo B') || message.includes('Estilo C') || message.includes('Padrão')) {
+      addMessage('Terceiro questionário:', 'bot');
+      generateQuestionnaire3();
+      currentQuestionnaire = 3;
+    } else {
+      addMessage('Desculpe, não entendi sua mensagem. Por favor, tente novamente!', 'bot');
+    }
+  } else if (currentQuestionnaire === 3) {
+    if (message.includes('Opção 1') || message.includes('Opção 2') || message.includes('Opção 3') || message.includes('Opção 4')) {
+      addMessage('Suas informações foram registradas com sucesso! Agora, posso ajudá-lo com seu projeto de decoração.', 'bot');
+      initAI();
+    } else {
+      addMessage('Desculpe, não entendi sua mensagem. Por favor, tente novamente!', 'bot');
+    }
+  }
+}
+
+function generateQuestionnaire2() {
+  const questionnaire2 = `
+    <div class="message message-bot">
+      Segundo questionário:
+      <div class="options">
+        <div class="option" onclick="sendMessage('Estilo A')">Estilo A</div>
+        <div class="option" onclick="sendMessage('Estilo B')">Estilo B</div>
+        <div class="option" onclick="sendMessage('Estilo C')">Estilo C</div>
+        <div class="option" onclick="sendMessage('Padrão')">Padrão</div>
+      </div>
+    </div>
+  `;
+  chatMessages.innerHTML += questionnaire2;
+}
+function generateQuestionnaire3() {
+  const questionnaire3 = `
+    <div class="message message-bot">
+      Terceiro questionário:
+      <div class="options">
+        <div class="option" onclick="sendMessage('Estilo A')">Estilo A</div>
+        <div class="option" onclick="sendMessage('Estilo B')">Estilo B</div>
+        <div class="option" onclick="sendMessage('Estilo C')">Estilo C</div>
+        <div class="option" onclick="sendMessage('Padrão')">Padrão</div>
+      </div>
+    </div>
+  `;
+  chatMessages.innerHTML += questionnaire3;
+}
+
+function generateQuestionnaire3() {
+ 
+     const questionnaire3 = `
+    <div class="message message-bot">
+      Terceiro questionário:
+      <div class="options">
+        <div class="option" onclick="sendMessage('Estilo A')">Estilo A</div>
+        <div class="option" onclick="sendMessage('Estilo B')">Estilo B</div>
+        <div class="option" onclick="sendMessage('Estilo C')">Estilo C</div>
+        <div class="option" onclick="sendMessage('Padrão')">Padrão</div>
+      </div>
+    </div>
+  `;
+  chatMessages.innerHTML += questionnaire3;
+}
+  function respondToUser(message) {
+    // Responder ao usuário com uma mensagem inteligente
+    const responses = [
+      'Ah, entendi! Você gostaria de...',
+      'Ok, vamos lá! Você pode me dizer mais sobre...',
+      'Certo, entendi. Você está procurando por...',
+    ];
+    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+    addMessage(randomResponse + ' ' + message, 'bot');
+  }
+
+  function processAIResponse(message) {
+    // Processar a resposta do usuário e responder com uma mensagem inteligente
+    respondToUser(message);
+  }
+
+  // Adiciona um evento de click ao botão de enviar
+  document.getElementById('btn-send').addEventListener('click', function () {
+    sendMessage();
+  });
+</script>
