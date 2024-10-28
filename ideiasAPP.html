@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Ideias Semanais</title>
+</head>
+<body>
+    <div class="app">
+        <header class="app-bar">
+            <button class="back-button" onclick="navigateBack()">
+                &#8592; <!-- Ícone de seta para trás -->
+            </button>
+            <h1>Ideias Semanais</h1>
+        </header>
+        <main class="main-content">
+            <div class="ideias-container" id="ideiasContainer">
+                <!-- As ideias serão inseridas aqui pelo JavaScript -->
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.app-bar {
+    background-color: #EBEBEB;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.back-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+.main-content {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.ideias-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+}
+
+.card-description {
+    font-size: 16px;
+    color: #555;
+    margin: 8px 0;
+}
+
+.view-more {
+    color: #FF9A00;
+    text-align: right;
+    cursor: pointer;
+}
+</style>
+<script>const ideiasSemanais = [
+    {
+        titulo: 'Casa Sustentável',
+        descricao: 'Projetos inovadores focados em sustentabilidade e economia de energia.',
+        imagem: 'img/sus.jpg',
+    },
+    {
+        titulo: 'Estúdio Moderno',
+        descricao: 'Espaço compacto e funcional para artistas e freelancers.',
+        imagem: 'img/studio.jpg',
+    },
+    {
+        titulo: 'Área de Convivência Urbana',
+        descricao: 'Projetos que promovem interação social e lazer nas cidades.',
+        imagem: 'img/area.jpg',
+    },
+];
+
+function navigateBack() {
+    // Lógica para voltar à página anterior (pode ser uma página específica)
+    window.history.back();
+}
+
+function displayIdeias() {
+    const container = document.getElementById('ideiasContainer');
+    container.innerHTML = '';
+
+    ideiasSemanais.forEach(ideia => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+
+        card.innerHTML = `
+            <img src="${ideia.imagem}" alt="${ideia.titulo}">
+            <div class="card-content">
+                <div class="card-title">${ideia.titulo}</div>
+                <div class="card-description">${ideia.descricao}</div>
+                <div class="view-more" onclick="viewDetails('${ideia.titulo}', '${ideia.descricao}', '${ideia.imagem}')">Ver mais</div>
+            </div>
+        `;
+
+        container.appendChild(card);
+    });
+}
+
+
+
+// Chama a função para exibir as ideias quando a página carrega
+document.addEventListener('DOMContentLoaded', displayIdeias);
+</script>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tektõn Home Page</title>
+</head>
+<body>
+    <header>
+        <div class="app-bar">
+            <input class="label-check" id="label-check" type="checkbox" onchange="toggleDrawer()">
+            <label for="label-check" class="hamburger-label">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </label>
+            <img src="img/latsflaubranco-removebg-preview.png" alt="Logo" class="logo" >
+        </div>
+    </header>
+    <nav class="drawer">
+        <button class="close-button" onclick="toggleDrawer()">&#10006; Voltar</button>
+        <ul>
+            <li><a href="#" onclick="navigateTo('home.html')">Home</a></li>
+            <li><a href="#" onclick="navigateTo('modificadosAPP.html')">Sobre</a></li>
+            <li><a href="#" onclick="navigateTo('modificadosAPP.html')">Contato</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section class="hero">
+            <div class="overlay">
+                <h1>Bem-vindo ao app da Tektõn!</h1>
+            </div>
+        </section>
+        <p class="description">
+            Explore nossos projetos arquitetônicos inovadores e descubra um mundo de design criativo e inteligente.
+        </p>
+        <div class="card-container">
+            <div class="card" onclick="navigateTo('modelsAPP.html')">
+                <i class="icon house"></i>
+                <span>Modelos Prontos</span>
+            </div>
+            <div class="card" onclick="navigateTo('basicoAPP.html')">
+                <i class="icon handshake"></i>
+                <span>Modelos Básicos</span>
+            </div>
+            <div class="card" onclick="navigateTo('modificadosAPP.html')">
+                <i class="icon build"></i>
+                <span>Projetos Modificados</span>
+            </div>
+            <div class="card" onclick="navigateTo('lobbyAPP.html')">
+                <i class="icon edit"></i>
+                <span>Projetos Personalizados</span>
+            </div>
+            <div class="card" onclick="navigateTo('ideiasAPP.html')">
+                <i class="icon lightbulb"></i>
+                <span>Ideias</span>
+            </div>
+        </div>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+
+}
+
+header {
+    background-color: #FFFFFF;
+}
+
+.app-bar {
+    display: flex;
+    align-items: center;
+    padding: 2px; /* Diminui o padding do app-bar */
+    padding-top: -50px;
+}
+
+.logo {
+    height: 100px;
+    width: 100px; /* Diminuindo a altura da logo */
+    margin-right: 115px; /* Ajuste para espaçamento da logo */
+}
+
+.label-check {
+    display: none; /* Esconde o checkbox */
+}
+
+.hamburger-label {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    margin-right: auto; /* Alinha o hamburger à esquerda */
+}
+
+.line1, .line2, .line3 {
+    background-color: #333;
+    height: 2px;
+    width: 25px; /* Diminuindo a largura do hamburger */
+    margin: 2px 0; /* Ajusta o espaçamento */
+    transition: 0.3s;
+}
+
+.drawer {
+    width: 250px;
+    background-color: #FFFFFF; /* Fundo branco */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 20px;
+    display: none; /* Oculta por padrão */
+    z-index: 30; /* Garante que a sidebar fique sobre a imagem */
+}
+
+.close-button {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.drawer ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.drawer ul li a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px 15px;
+    display: block;
+    transition: background 0.3s;
+}
+
+.drawer ul li a:hover {
+    background-color: #FF9A00; /* Destaca o item ao passar o mouse */
+    color: white; /* Altera a cor do texto ao passar o mouse */
+}
+
+.hero {
+    height: 250px;
+    background-image: url('img/Imagem do WhatsApp .jpg');
+    background-size: cover;
+    border-radius: 0 0 30px 30px;
+    position: relative;
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.54);
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    color: white;
+    font-size: 28px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+}
+
+.description {
+    padding: 16px;
+    font-size: 18px;
+    color: #000;
+}
+
+.card-container {
+    padding: 16px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #FF9A00;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+    transition: box-shadow 0.3s;
+}
+
+.card:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+    font-size: 30px;
+    color: #FF9A00;
+    margin-right: 10px;
+}
+</style>
+
+<script>
+function navigateTo(page) {
+    // Lógica para navegação entre as páginas
+    window.location.href = page; // Substitua pelo nome real das páginas
+}
+
+function toggleDrawer() {
+    const drawer = document.querySelector('.drawer');
+    const checkbox = document.getElementById('label-check');
+    drawer.style.display = checkbox.checked ? 'block' : 'none';
+    // Alterna o estado do checkbox ao clicar no botão de fechar
+    if (checkbox.checked) {
+        checkbox.checked = false;
+    }
+}
+</script>

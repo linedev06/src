@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tela em Construção</title>
+</head>
+<body>
+    <div class="container">
+        <div class="message-box">
+            <h1>Tela em Construção</h1>
+            <p>Os engenheiros de software da Tekton, liderados pelo mestre programador Vitor, estão construindo esta tela.</p>
+            <p>A Tekton agradece a compreensão desde já!</p>
+            <button class="close-button" onclick="goBack()">X</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+.message-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+p {
+    font-size: 18px;
+    color: #555;
+    margin: 10px 0;
+}
+
+.close-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: white;
+    background-color: #FF9A00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    background-color: #e68a00;
+}
+</style>
+<script>function goBack() {
+    window.location.href = 'appsite.html'; // Altere para o caminho correto do seu arquivo
+}
+</script>

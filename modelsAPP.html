@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tektõn</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <a href="appsite.html"><button class="close-button" onclick="goBack()">✖</button></a>
+            <img src="img/latsflaubranco-removebg-preview.png" alt="Logo Tektõn" class="logo">
+        </header>
+        <main>
+            <div class="button-group">
+                <button class="action-button">VER MAPA</button>
+                <button class="action-button">FILTRAR</button>
+            </div>
+            <div class="property-list">
+                <!-- As propriedades serão inseridas aqui via JavaScript -->
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+}
+
+.app {
+    max-width: 375px; /* Largura do smartphone */
+    margin: 0 auto;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #FF9A00;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.logo {
+    height: 100px;
+    width: 100px; /* Altura do logo */
+    margin-right: 110px;
+}
+
+main {
+    padding: 16px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.action-button {
+    background-color: #FF9A00;
+    color: black;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.property-list {
+    display: flex;
+    flex-direction: column; /* Altera para coluna */
+    gap: 20px;
+}
+
+.property-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%; /* Garante que o cartão use toda a largura disponível */
+}
+
+.property-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.property-card .details {
+    padding: 16px;
+}
+
+.property-card .price {
+    color: green;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+</style>
+
+<script>
+
+const properties = [
+    {
+        imageUrl: 'img/architecture2.jpg',
+        title: 'Casa Térrea Condomínio Golden - SP',
+        size: '300.00 m²',
+        bedrooms: '3 Quartos',
+        suites: '3 Suítes',
+        price: 'R$ 1.500.000 Venda',
+    },
+    {
+        imageUrl: 'img/architecture1.jpg',
+        title: 'Chácara Recanto Itu - SP',
+        size: '2,500.00 m²',
+        bedrooms: '5 Quartos',
+        suites: '3 Suítes',
+        price: 'R$ 2.200.000 Venda',
+    },
+    {
+        imageUrl: 'img/architecture3.jpg',
+        title: 'Casa de Praia em Bertioga - SP',
+        size: '250.00 m²',
+        bedrooms: '4 Quartos',
+        suites: '2 Suítes',
+        price: 'R$ 1.800.000 Venda',
+    },
+    {
+        imageUrl: 'img/Chacara1.jpg',
+        title: 'Chácara Vale Verde - SP',
+        size: '5,000.00 m²',
+        bedrooms: '6 Quartos',
+        suites: '4 Suítes',
+        price: 'R$ 3.000.000 Venda',
+    },
+    {
+        imageUrl: 'img/Campos.jpg',
+        title: 'Casa de Campo em Campos do Jordão - SP',
+        size: '400.00 m²',
+        bedrooms: '5 Quartos',
+        suites: '3 Suítes',
+        price: 'R$ 2.500.000 Venda',
+    },
+    {
+        imageUrl: 'img/sonho.jpg',
+        title: 'Chácara dos Sonhos - SP',
+        size: '3,200.00 m²',
+        bedrooms: '4 Quartos',
+        suites: '2 Suítes',
+        price: 'R$ 2.000.000 Venda',
+    },
+];
+
+function loadProperties() {
+    const propertyList = document.querySelector('.property-list');
+    properties.forEach(property => {
+        const card = document.createElement('div');
+        card.className = 'property-card';
+        card.innerHTML = `
+            <img src="${property.imageUrl}" alt="${property.title}">
+            <div class="details">
+                <h3>${property.title}</h3>
+                <p>${property.size}</p>
+                <p>${property.bedrooms}</p>
+                <p>${property.suites}</p>
+                <p class="price">${property.price}</p>
+            </div>
+        `;
+        propertyList.appendChild(card);
+    });
+}
+
+// Carrega as propriedades na página
+window.onload = loadProperties;
+</script>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Preço</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div style="padding-bottom: 200px;"></div>
+    <div class="container">
+       
+        <header>
+            <a href="appsite.html"><button class="close-button" onclick="goBack()">✖</button></a>
+           
+        </header>
+        <main>
+            <div class="dropdown-container">
+                <label for="pavimentos">Pavimentos</label>
+                <select id="pavimentos"></select>
+            </div>
+            <div class="dropdown-container">
+                <label for="dormitorios">Dormitórios</label>
+                <select id="dormitorios"></select>
+            </div>
+            <div class="dropdown-container">
+                <label for="terrenos">Terrenos</label>
+                <select id="terrenos"></select>
+            </div>
+            <div class="dropdown-container">
+                <label for="area">Área Construída</label>
+                <select id="area"></select>
+            </div>
+            <div class="dropdown-container">
+                <label for="sobrado">Sobrado</label>
+                <select id="sobrado"></select>
+            </div>
+            <button id="calculate-button">Calcular Preço</button>
+        </main>
+        <div id="result-dialog" class="dialog hidden">
+            <div class="dialog-content">
+                <h2>Preço Calculado</h2>
+                <p id="result-text"></p>
+                <button id="close-dialog">Fechar</button>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    margin-top: 500px;
+    width: 80%;
+    max-width: 600px;
+    margin: auto;
+    padding: 16px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 100px;
+}
+
+button {
+    background-color: #FF9A00;
+    border: none;
+    border-radius:50px ;
+}
+
+.dropdown-container {
+    margin-bottom: 16px;
+    
+}
+
+label {
+    font-weight: bold;
+}
+
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+</style>
+
+<script>const pavimentoOptions = [
+    'Pavimento de Pedra',
+    'Pavimento de Concreto',
+    'Pavimento de Cerâmica',
+    'Pavimento Intertravado',
+    'Pavimento de Madeira',
+];
+
+const dormitorioOptions = [
+    '1 Quarto',
+    '2 Quartos',
+    '3 Quartos',
+    '4 Quartos',
+];
+
+const terrenoOptions = [
+    'Terreno Pequeno',
+    'Terreno Médio',
+    'Terreno Grande',
+];
+
+const areaOptions = [
+    'Até 50m²',
+    '50m² a 100m²',
+    'Acima de 100m²',
+];
+
+const sobradoOptions = [
+    'Sobrado Simples',
+    'Sobrado Duplex',
+    'Sobrado Triplex',
+];
+
+let selectedPavimento;
+let selectedDormitorios;
+let selectedTerreno;
+let selectedArea;
+let selectedSobrado;
+
+function populateDropdowns() {
+    const pavimentosSelect = document.getElementById('pavimentos');
+    const dormitoriosSelect = document.getElementById('dormitorios');
+    const terrenosSelect = document.getElementById('terrenos');
+    const areaSelect = document.getElementById('area');
+    const sobradoSelect = document.getElementById('sobrado');
+
+    pavimentoOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        pavimentosSelect.appendChild(opt);
+    });
+
+    dormitorioOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        dormitoriosSelect.appendChild(opt);
+    });
+
+    terrenoOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        terrenosSelect.appendChild(opt);
+    });
+
+    areaOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        areaSelect.appendChild(opt);
+    });
+
+    sobradoOptions.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        sobradoSelect.appendChild(opt);
+    });
+}
+
+function calculatePrice() {
+    let price = 0;
+
+    if (selectedPavimento === 'Pavimento de Pedra') price += 100;
+    if (selectedPavimento === 'Pavimento de Concreto') price += 80;
+    if (selectedPavimento === 'Pavimento de Cerâmica') price += 60;
+    if (selectedPavimento === 'Pavimento Intertravado') price += 90;
+    if (selectedPavimento === 'Pavimento de Madeira') price += 120;
+
+    if (selectedDormitorios === '1 Quarto') price += 50;
+    if (selectedDormitorios === '2 Quartos') price += 100;
+    if (selectedDormitorios === '3 Quartos') price += 150;
+    if (selectedDormitorios === '4 Quartos') price += 200;
+
+    if (selectedTerreno === 'Terreno Pequeno') price += 30;
+    if (selectedTerreno === 'Terreno Médio') price += 60;
+    if (selectedTerreno === 'Terreno Grande') price += 90;
+
+    if (selectedArea === 'Até 50m²') price += 200;
+    if (selectedArea === '50m² a 100m²') price += 300;
+    if (selectedArea === 'Acima de 100m²') price += 500;
+
+    if (selectedSobrado === 'Sobrado Simples') price += 150;
+    if (selectedSobrado === 'Sobrado Duplex') price += 250;
+    if (selectedSobrado === 'Sobrado Triplex') price += 350;
+
+    return price;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    populateDropdowns();
+
+    document.getElementById('pavimentos').addEventListener('change', (e) => {
+        selectedPavimento = e.target.value;
+    });
+
+    document.getElementById('dormitorios').addEventListener('change', (e) => {
+        selectedDormitorios = e.target.value;
+    });
+
+    document.getElementById('terrenos').addEventListener('change', (e) => {
+        selectedTerreno = e.target.value;
+    });
+
+    document.getElementById('area').addEventListener('change', (e) => {
+        selectedArea = e.target.value;
+    });
+
+    document.getElementById('sobrado').addEventListener('change', (e) => {
+        selectedSobrado = e.target.value;
+    });
+
+    document.getElementById('calculate-button').addEventListener('click', () => {
+        const price = calculatePrice();
+        document.getElementById('result-text').textContent = `O preço total é: R$ ${price.toFixed(2)}`;
+        document.getElementById('result-dialog').classList.remove('hidden');
+    });
+
+    document.getElementById('close-button').addEventListener('click', () => {
+        // Implementar a lógica para fechar a página ou voltar para a tela anterior
+        window.close(); // ou redirecionar para outra página
+    });
+
+    document.getElementById('close-dialog').addEventListener('click', () => {
+        document.getElementById('result-dialog').classList.add('hidden');
+    });
+});
+</script>

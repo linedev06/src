@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tekton App</title>
+</head>
+<body>
+    <div class="app">
+        <header class="app-bar">
+            
+        </header>
+        <main class="main-content">
+            <h1>Bem-vindo ao Lobby Tektõn!</h1>
+            <div class="menu">
+                <button class="menu-button" onclick="navigateTo('plantas')">
+                    <i class="icon library-icon">📚</i> Minhas Plantas
+                </button>
+                <button class="menu-button" onclick="navigateTo('mapa')">
+                    <i class="icon map-icon">🗺️</i> Mapa
+                </button>
+                <button class="menu-button" onclick="navigateTo('chat')">
+                    <i class="icon chat-icon">💬</i> Chat com Arquiteto
+                </button>
+                <button class="menu-button" onclick="navigateTo('perfil')">
+                    <i class="icon person-icon">👤</i> Perfil
+                </button>
+            </div>
+        </main>
+        <footer class="bottom-nav">
+            <button class="bottom-button" onclick="navigateTo('home')">
+                <i class="icon home-icon">🏠</i> Home
+            </button>
+            <button class="bottom-button" onclick="navigateTo('ajuda')">
+                <i class="icon help-icon">❓</i> Ajuda
+            </button>
+            <a href="appsite.html"><button class="bottom-button" >
+                <i class="icon exit-icon">❌</i> Sair
+            </button></a>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+<style>body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.app-bar {
+    background-color: #f5f5f5;
+    padding: 15px;
+    text-align: center;
+}
+
+.logo {
+    height: 80px;
+    object-fit: contain;
+}
+
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0B1742;
+    margin-bottom: 20px;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-button {
+    width: 80%;
+    padding: 15px;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.menu-button:hover {
+    background-color: #FF9A00;
+    transform: scale(1.05);
+}
+
+.icon {
+    margin-right: 10px;
+    color: #0B1742; /* Cor do ícone */
+}
+
+.bottom-nav {
+    display: flex;
+    justify-content: space-around;
+    background-color: #ffd28f;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.bottom-button {
+    background: none;
+    border: none;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.bottom-button:hover {
+    color: #f0f0f0;
+}
+</style>
+<script>function navigateTo(page) {
+    switch (page) {
+        case 'plantas':
+            alert("Navegando para Minhas Plantas");
+            break;
+        case 'mapa':
+            alert("Navegando para o Mapa");
+            break;
+        case 'chat':
+            alert("Navegando para o Chat com Arquiteto");
+            break;
+        case 'perfil':
+            alert("Navegando para o Perfil");
+            break;
+        case 'home':
+            alert("Navegando para Home");
+            break;
+        case 'ajuda':
+            alert("Navegando para Ajuda");
+            break;
+        case 'sair':
+            alert("Saindo do aplicativo");
+            break;
+        default:
+            alert("Página não encontrada");
+    }
+}
+</script>
