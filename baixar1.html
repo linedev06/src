@@ -104,6 +104,18 @@
                     <button id="demo-button" style="display: none;">Experimente agora</button>
                 </div>
                 <div class="iframe-container">
+                    <div class="bar-info">
+                        <div class="status-bar" id="status-bar">
+                            <div class="camera"></div>
+                            <div class="time" id="current-time">00:00</div>
+                            <div class="battery">
+                                <div class="battery-icon">
+                                    <div class="battery-level" id="battery-level" style="width: 100%;"></div>
+                                </div>
+                                <div class="battery-percentage" id="battery-percentage">100%</div>
+                            </div>
+                        </div>
+                    </div>
                     <iframe id="app-iframe" src="appsite.html" title="App Site"></iframe>
                     <div class="home-button" id="home-button" onmousedown="startHold()" onmouseup="endHold()" onmouseleave="endHold()"></div>
                     <!-- Tela de desligamento -->
@@ -112,6 +124,14 @@
                     </div>
                     <!-- Tela de blackout -->
                     <div id="blackout-screen" class="blackout" style="display: none;"></div>
+                    <div id="low-battery-warning" style="display: none; text-align: center; color: red; font-size: 18px;">
+                        Bateria fraca! Conectar ao carregador.
+                        <br>
+                        <button id="connect-button">Conectar</button>
+                    </div>
+                    <div id="charger-icon" style="display: none; position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">
+                        <img src="img/charger.png" alt="Carregador" width="50" />
+                    </div>
                     <div id="turning-on-message" style="display: none; color: white; font-size: 24px; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 102;">
                         Ligando...
                     </div>
@@ -119,10 +139,6 @@
             </div>
         </section>
     </div>
-    
-    
-
-    
     
     
     
@@ -517,7 +533,6 @@ section {
     gap: 40px;
 }
 
-
 .video-section h2 {
     font-size: 32px; 
     font-weight: 600; 
@@ -526,7 +541,6 @@ section {
     color: #333;
     text-transform: uppercase; 
 }
-
 
 .video-container {
     width: 100%;
@@ -547,7 +561,6 @@ section {
     border-radius: 18px;
 }
 
-
 #demo {
     display: flex;
     flex-direction: column;
@@ -555,7 +568,6 @@ section {
     gap: 20px;
     text-align: center;
 }
-
 
 #demo-button-container {
     display: flex;
@@ -581,7 +593,6 @@ button:hover {
     transform: translateY(-2px); 
 }
 
-
 .iframe-container {
     display: none;
     position: relative;
@@ -606,8 +617,6 @@ button:hover {
     background-color: #222;
     border-radius: 50%;
 }
-
-
 
 .home-button:active {
     background-color: #555;
@@ -655,10 +664,9 @@ iframe {
     left: 0;
     right: 0;
     bottom: 0;
-background-color: black;
+    background-color: black;
     z-index: 100; 
 }
-
 
 .home-button {
     position: absolute;
@@ -675,12 +683,11 @@ background-color: black;
     transition: background-color 0.3s ease, transform 0.1s ease;
 }
 
-
-
 .home-button:active {
     transform: translateY(50%) scale(0.95);
     background-color: #555;
 }
+
 #turning-on-message {
     color: white;
     font-size: 24px;
@@ -693,25 +700,229 @@ background-color: black;
     transition: opacity 0.3s ease; 
 }
 
+.status-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    color: #000000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    box-sizing: border-box;
+    z-index: 103;
+    transition: opacity 0.5s ease;
+}
 
+.time {
+    font-size: 16px;
+}
+
+.battery {
+    display: flex;
+    align-items: center;
+}
+
+.battery-icon {
+    width: 24px;
+    height: 12px;
+    border: 2px solid #000000;
+    border-radius: 2px;
+    position: relative;
+    margin-right: 5px;
+}
+
+.battery-icon::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    right: -4px;
+    width: 2px;
+    height: 6px;
+    background-color: #000000;
+}
+
+.battery-level {
+    height: 100%;
+    background-color: #00ff00;
+}
+
+.battery-percentage {
+    font-size: 16px;
+}
+
+#charger-icon {
+    transition: transform 0.5s ease;
+}
+
+.bar-info {
+    transition: opacity 0.5s ease;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none; 
+   
+}
+
+
+.camera {
+    position: absolute;
+    top: 10px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px; 
+    height: 30px; 
+    border-radius: 50%;
+    background-color: #000000; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
+}
 </style>
 <script>
-    document.getElementById('home-button').onclick = function() {
-            window.parent.document.getElementById('app-iframe').src = 'appsite.html'; 
-        };
+function startHold() {
+    if (isShutdown) return; 
+    holdTimeout = setTimeout(() => {
+        const shutdownScreen = document.getElementById('shutdown-screen');
+        shutdownScreen.style.display = 'flex'; 
+        shutdownScreen.classList.add('active'); 
+        isShutdown = true; 
+        
+       
+        const statusBar = document.querySelector('.status-bar');
+        statusBar.classList.add('hidden'); 
+        statusBar.style.opacity = '0'; 
+        setTimeout(() => {
+            shutdownScreen.style.display = 'none'; 
+            document.getElementById('blackout-screen').style.display = 'block'; 
+        }, 2000); 
+    }, 2000);
+}
+
+function turnOn() {
+    if (!isShutdown) return; 
+    document.getElementById('blackout-screen').style.display = 'none'; 
+    const shutdownScreen = document.getElementById('shutdown-screen');
+    shutdownScreen.style.display = 'none'; 
+    
+    // Mostrar novamente a barra de status
+    const statusBar = document.querySelector('.status-bar');
+    statusBar.classList.remove('hidden'); // Remove a classe hidden
+    statusBar.style.opacity = '1'; // Certifique-se de que a barra de status fique visível novamente
+
+    isShutdown = false; 
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    let batteryLevel = 100;
+
+    function updateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+    }
+
+    function updateBattery() {
+        if (batteryLevel > 0) {
+            batteryLevel -= 0.1;
+            batteryLevel = Math.max(0, Math.floor(batteryLevel));
+        }
+
+        const batteryLevelElement = document.getElementById('battery-level');
+        const batteryPercentageElement = document.getElementById('battery-percentage');
+        
+        batteryLevelElement.style.width = batteryLevel + '%';
+        batteryPercentageElement.textContent = batteryLevel + '%';
+        
+        if (batteryLevel > 50) {
+            batteryLevelElement.style.backgroundColor = '#00ff00';
+        } else if (batteryLevel > 20) {
+            batteryLevelElement.style.backgroundColor = '#ffcc00';
+        } else {
+            batteryLevelElement.style.backgroundColor = '#ff0000';
+            showLowBatteryWarning();
+        }
+
+        if (batteryLevel <= 0) {
+            batteryLevel = 0;
+            clearInterval(batteryInterval);
+            showLowBatteryWarning();
+        }
+    }
+
+    function showLowBatteryWarning() {
+        document.getElementById('low-battery-warning').style.display = 'block';
+    }
+
+    document.getElementById('connect-button').addEventListener('click', function() {
+        document.getElementById('charger-icon').style.display = 'block';
+        startCharging();
+    });
+
+    function startCharging() {
+        const chargingInterval = setInterval(function() {
+            if (batteryLevel < 100) {
+                batteryLevel += 0.5;
+                batteryLevel = Math.min(100, Math.floor(batteryLevel));
+                updateBattery();
+            } else {
+                clearInterval(chargingInterval);
+                document.getElementById('charger-icon').style.display = 'none';
+                document.getElementById('low-battery-warning').style.display = 'none';
+            }
+        }, 100);
+    }
+
+    updateTime();
+    updateBattery();
+
+    const batteryInterval = setInterval(updateBattery, 1000);
+    setInterval(updateTime, 1000);
+
+    function startHold() {
+        document.getElementById('blackout-screen').style.display = 'block';
+        setTimeout(function() {
+            document.getElementById('shutdown-screen').style.display = 'flex';
+            document.getElementById('blackout-screen').style.display = 'none';
+        }, 2000);
+    }
+
+    function endHold() {
+        document.getElementById('blackout-screen').style.display = 'none';
+        document.getElementById('shutdown-screen').style.display = 'none';
+    }
+
+    function turnOn() {
+        const turningOnMessage = document.getElementById('turning-on-message');
+        turningOnMessage.style.opacity = '1';
+        setTimeout(() => {
+            turningOnMessage.style.opacity = '0';
+        }, 3000);
+    }
+
+    turnOn();
+});
+
+document.getElementById('home-button').onclick = function() {
+    window.parent.document.getElementById('app-iframe').src = 'appsite.html'; 
+};
+
 let holdTimeout;
 let isShutdown = false; 
 
 function startHold() {
     if (isShutdown) return; 
     holdTimeout = setTimeout(() => {
-      
         const shutdownScreen = document.getElementById('shutdown-screen');
         shutdownScreen.style.display = 'flex'; 
         shutdownScreen.classList.add('active'); 
         isShutdown = true; 
 
-        
         setTimeout(() => {
             shutdownScreen.style.display = 'none'; 
             document.getElementById('blackout-screen').style.display = 'block'; 
@@ -723,46 +934,31 @@ function endHold() {
     clearTimeout(holdTimeout); 
 }
 
-
 function turnOn() {
     if (!isShutdown) return; 
-   
     document.getElementById('blackout-screen').style.display = 'none'; 
     const shutdownScreen = document.getElementById('shutdown-screen');
     shutdownScreen.style.display = 'none'; 
     isShutdown = false; 
 }
 
-
 document.getElementById('home-button').addEventListener('mousedown', turnOn);
 
-
-
-
-
-
-
-
-
-
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const demoButton = document.getElementById("demo-button");
-        const iframeContainer = document.querySelector(".iframe-container");
-
+document.addEventListener("DOMContentLoaded", function () {
+    const demoButton = document.getElementById("demo-button");
+    const iframeContainer = document.querySelector(".iframe-container");
   
-        demoButton.style.display = "block";
+    demoButton.style.display = "block";
 
-
-        demoButton.addEventListener("click", function () {
-            iframeContainer.style.display = "block";
-            demoButton.style.display = "none";
-        });
+    demoButton.addEventListener("click", function () {
+        iframeContainer.style.display = "block";
+        demoButton.style.display = "none";
     });
+});
 
+function goHome() {
+    const iframe = document.querySelector(".iframe-container iframe");
+    iframe.src = "appsite.html";
+}
 
-    function goHome() {
-        const iframe = document.querySelector(".iframe-container iframe");
-        iframe.src = "appsite.html";
-    }
 </script>
