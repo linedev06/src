@@ -101,9 +101,9 @@
             <h2>Deseja experimentar uma amostra do nosso app?</h2>
             <div class="demo-container">
                 <div id="demo-button-container">
-                    <button id="demo-button" style="display: none;">Experimente agora</button>
+                    <button id="demo-button">Experimente agora</button>
                 </div>
-                <div class="iframe-container">
+                <div class="iframe-container" style="display: none;">
                     <div class="bar-info">
                         <div class="status-bar" id="status-bar">
                             <div class="camera"></div>
@@ -118,11 +118,9 @@
                     </div>
                     <iframe id="app-iframe" src="appsite.html" title="App Site"></iframe>
                     <div class="home-button" id="home-button" onmousedown="startHold()" onmouseup="endHold()" onmouseleave="endHold()"></div>
-                    <!-- Tela de desligamento -->
                     <div id="shutdown-screen" class="shutdown-screen" style="display: none;">
                         <h2>Desligando...</h2>
                     </div>
-                    <!-- Tela de blackout -->
                     <div id="blackout-screen" class="blackout" style="display: none;"></div>
                     <div id="low-battery-warning" style="display: none; text-align: center; color: red; font-size: 18px;">
                         Bateria fraca! Conectar ao carregador.
@@ -136,10 +134,19 @@
                         Ligando...
                     </div>
                 </div>
-            </div>
+                <div class="qr-code-container" style="display: none; align-items: center; justify-content: space-between;">
+                    <div style="margin-right: 20px; padding-bottom: 20px;">
+                        <h2>Deseja instalar o nosso app?</h2>
+                    </div>
+                    <div style="width: 210px; border: 5px solid #ff9a00; border-radius: 10px;height: 210px;   margin-left: 150px;">
+                        <img src="img/qrcode_linedev06.github.io.png" alt="QR Code" width="200" />
+                    </div>
+                </div>
+                
+            
         </section>
-    </div>
-    
+        
+        
     
     
 </body>
@@ -604,6 +611,8 @@ button:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     background-color: #ffffff;
     transition: transform 0.4s ease;
+
+    margin-left: 500px;
 }
 
 .iframe-container::before {
@@ -627,6 +636,7 @@ button:hover {
     transform: scale(1.02);
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
 }
+
 
 iframe {
     width: 100%;
@@ -779,8 +789,42 @@ iframe {
     background-color: #000000; 
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); 
 }
+
+
+
+
+.demo-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0px;
+}
+
+
+.qr-code-container {
+    width: 30%;
+    text-align: center;
+    margin-right: 290px;
+
+}
+
+
+.hidden {
+    display: none;
+}
+
 </style>
 <script>
+document.getElementById('demo-button').addEventListener('click', function() {
+    document.querySelector('.iframe-container').style.display = 'block';
+    document.querySelector('.qr-code-container').style.display = 'block';
+    document.getElementById('demo-button-container').style.display = 'none';
+});
+
+
+
+
+
 function startHold() {
     if (isShutdown) return; 
     holdTimeout = setTimeout(() => {

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tektõn</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"><img src="img/latsflaubranco-removebg-preview.png" alt="Logo"></div>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Projetos Arquitetônicos na palma da sua mão!</h1>
+                <p>DÊ UM PASSO EM DIREÇÃO AO FUTURO, DÊ UM PASSO COM A TEKTÕN.</p>
+                <a href="download/app-release.apk" class="download-button" download>Baixe Nossa Versão para Android</a>
+            </div>
+            <div class="hero-image">
+              
+            </div>
+        </section>
+        <section id="sobre" class="about" style="background-color: #fff;">
+            <div class="about-text">
+                <h2>Sobre o App da Tektõn</h2>
+                <p>
+                    O aplicativo da Tektõn é a maneira mais inovadora e prática para você acompanhar seus projetos, onde quer que esteja. Com ele, você tem acesso a informações atualizadas, pode se comunicar com a equipe e receber suporte a qualquer hora.
+                </p>
+            </div>
+            <div class="about-content">
+                <div class="app-image">
+                    <img src="img/Design sem nome (3).png" alt="Imagem do aplicativo no celular">
+                </div>
+                <div class="app-features">
+                    <h3>Sobre o App</h3>
+                    <ul>
+                        <li>✅ Interface intuitiva</li>
+                        <li>✅ Seus projetos com fácil acesso</li>
+                        <li>✅ Cabe na palma da sua mão</li>
+                        <li>✅ Fácil de usar</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <section id="propostas" class="proposals-section">
+            <div class="proposals-content">
+                <h2>Propostas</h2>
+                <ul class="proposal-list">
+                    <li>✅ Variedade de funções</li>
+                    <li>✅ Suporte 24h</li>
+                    <li>✅ Fale com seu arquiteto onde estiver</li>
+                    <li>✅ Navegação Simplificada</li>
+                    <li>✅ Acessibilidades</li>
+                    <li>✅ Alta Confiabilidade</li>
+                    <li>✅ Comunicação eficiente</li>
+                </ul>
+            </div>
+            <div class="app-image">
+                <img src="img/tela2.png" alt="Imagem do aplicativo no celular">
+            </div>
+        </section>
+        <section id="video" class="video-section">
+            <h2>Confira nosso vídeo de apresentação</h2>
+            <div class="video-container">
+                <video id="presentation-video" controls disablePictureInPicture controlsList="nofullscreen">
+                    <source src="img/MicrosoftTeams-video (4).mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
+<style>* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #ffffff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+header {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.logo img {
+    width: 100px;
+    height: auto;
+}
+
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffcc80;
+    border-radius: 20px;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.hero-content {
+    margin-bottom: 20px;
+}
+
+.hero-content h1 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.hero-content p {
+    color: #666;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.download-button {
+    padding: 5px 10px;
+    background-color: #ff9a00;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.download-button:hover {
+    background-color: #e68a00;
+}
+
+.hero-image img {
+    width: 200px;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s;
+}
+
+.hero-image img:hover {
+    transform: scale(1.05);
+}
+
+.about,
+.proposals-section,
+.video-section,
+.demo-section {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.about-text,
+.proposals-content,
+.video-section h2,
+.demo-section h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.about-text h2,
+.proposals-content h2,
+.video-section h2,
+.demo-section h2 {
+    font-size: 24px;
+    color: #333;
+}
+
+.about-text p,
+.proposals-content ul,
+.video-section h2,
+.demo-section h2 {
+    font-size: 16px;
+    color: #666;
+}
+
+.about-content,
+.demo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.app-image img,
+.iframe-container iframe {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+
+}
+
+.app-features,
+.proposals-content ul {
+    text-align: left;
+}
+
+.app-features h3,
+.proposals-content h2 {
+    font-size: 20px;
+    color: #333;
+}
+
+.app-features ul,
+.proposals-content ul {
+    list-style: none;
+    padding: 0;
+}
+
+.app-features li,
+.proposals-content li {
+    background-color: #fdf6e3;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.video-container,
+.demo-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.video-container video,
+.iframe-container iframe {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .hero-content h1 {
+        font-size: 18px;
+    }
+
+    .hero-content p {
+        font-size: 14px;
+    }
+
+    .download-button {
+        font-size: 14px;
+        padding: 5px 10px;
+    }
+
+    .hero-image img {
+        width: 150px;
+    }
+
+    .about-content,
+    .demo-container {
+        flex-direction: column;
+    }
+}
+</style>
