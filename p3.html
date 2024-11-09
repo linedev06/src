@@ -419,17 +419,34 @@
             position: absolute;
             bottom: 15px;
             left: 15px;
-            background-color: #FF9A00;
+            background-color: #ff9a00;
             color: #fff;
             border: none;
             padding: 10px 20px;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-top: 0;
+            margin-top: 10px;
             margin-bottom: 190px;
             margin-left: 25px;
         }
+
+        .tekt-btn{
+            position: absolute;
+            bottom: 15px;
+            left: 45px;
+            background-color: #FF9A00;
+            color: #fff;
+            border: none;
+            border-radius: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 250px;
+            margin-left: 30px;
+
+
+        }
+        
 
         .features-toggle:hover {
             background-color: #ffa533;
@@ -862,6 +879,8 @@
     box-shadow: 0 0 10px gold;
 }
 
+
+
     </style>
 </head>
 
@@ -888,9 +907,11 @@
                     <li data-channel="#Voice-chat">#Voice-chat</li>
                 </ul>
                 <div style="margin-top: 50px;"></div>
-                <hr>
+                <div style="margin-top: -30px;"></div>
+                <hr >
+              
                 <!-- Novas Funcionalidades -->
-                <button class="features-toggle" onclick="toggleFeatures()">Status e Feedback</button>
+                <button class="features-toggle" onclick="toggleFeatures()" >Status e Feedback</button>
                 <div class="features-area" id="featuresArea">
                     <div class="feature">
                         <h4>Status do Projeto</h4>
@@ -908,7 +929,9 @@
                             <div class="feedback-input">
                                 <input type="text" id="feedback-input" placeholder="Escreva seu feedback...">
                                 <button id="submit-feedback">Enviar</button>
+                                
                             </div>
+                            
                             <div class="poll-section">
                                 <p><strong>Enquete:</strong> O que você achou?</p>
                                 <button onclick="voteFeedback(true)">👍 Positivo</button>
@@ -931,10 +954,13 @@
                     </div>
 
                 </div>
+                <button class="tekt-btn" onclick="window.location.href='youtek.html'"><img src="img/playBrancoNovo.png" style="width: 70px; border-radius: 50%;" alt=""></button>
             </div>
             <div style="margin-bottom: 60px;">
                 <hr class="custom-hr">
             </div>
+           
+
             <button class="back-btn" onclick="location.href='lobbyperfil1.html'">Voltar</button>
 
 

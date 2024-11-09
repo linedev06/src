@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>TekView</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="main-header">
+        <div class="menu-logo">
+            <i class="fas fa-bars menu-icon"></i>
+            <img src="img/playBranco.png" alt="YouTube Logo" class="play-icon">
+        </div>
+        <div class="search-area">
+            <input type="text" placeholder="Pesquisar" class="search-bar">
+            <button class="search-button"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="header-icons">
+            <i class="fas fa-video"></i>
+            <i class="fas fa-bell"></i>
+            <img src="img/arquiteto.png" alt="Avatar" class="user-avatar">
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Video Player Section -->
+        <section class="video-player-section">
+            <div class="video-player">
+                <iframe width="100%" height="500px" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="video-info">
+                <h1>Visita à Obra Residencial - Andamento do Projeto</h1>
+                <div class="video-stats">
+                    <span>60 mil visualizações • há 1 mês</span>
+                    <div class="video-actions">
+                        <button class="like-button"><i class="fas fa-thumbs-up"></i> 3,4 mil</button>
+                        <button class="dislike-button"><i class="fas fa-thumbs-down"></i></button>
+                        <button class="share-button"><i class="fas fa-share"></i> Compartilhar</button>
+                        <button class="save-button"><i class="fas fa-save"></i> Download</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="channel-info">
+                    <img src="img/playBrancoNovo.png" alt="Felquinhas" class="channel-avatar">
+                    <div class="channel-details">
+                        <h2>Tektõn</h2>
+                        <p>720 mil inscritos</p>
+                    </div>
+                    <button class="subscribe-button">Inscrever-se</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Suggested Videos Section -->
+        <section class="suggested-videos">
+            <div class="suggested-video">
+                <img src="img/tumb3.jpg" alt="Thumbnail">
+                <div class="suggested-video-info">
+                    <h3>Progresso da Obra Industrial - Atualização Semanal</h3>
+                    <p> • 37 mil visualizações • há 3 dias</p>
+                </div>
+            </div>
+            <div class="suggested-video">
+                <img src="img/tumb4.jpg" alt="Thumbnail">
+                <div class="suggested-video-info">
+                    <h3>Tour 360°: Construção de Sede Corporativa</h3>
+                    <p> • 27 mil visualizações • há 1 mês</p>
+                </div>
+            </div>
+            <div class="suggested-video">
+                <img src="img/tumb5.jpg" alt="Thumbnail">
+                <div class="suggested-video-info">
+                    <h3>Andamento do Projeto de Interiores - Reforma Residencial</h3>
+                    <p> • 1,6 mi visualizações • há 1 mês</p>
+                </div>
+            </div>
+            <!-- Continue com os vídeos sugeridos -->
+        </section>
+    </main>
+
+    <!-- Footer -->
+     
+    <script src="script.js"></script>
+</body>
+</html>
+<style>body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, p {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Estilizando o Header */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    color: #ff9a00;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.menu-logo {
+    display: flex;
+    align-items: center;
+}
+
+.menu-icon {
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.play-icon {
+        height: 100px; 
+        margin: 0 20px; 
+        width: 300px; 
+    }
+    
+
+.search-area {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.search-bar {
+    width: 500px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #c9c9c9;
+    border-radius: 5px 0 0 5px;
+    transition: border 0.3s ease;
+}
+
+/* Icones do header */
+.header-icons {
+    display: flex;
+    align-items: center;
+}
+
+.header-icons i {
+    font-size: 1.5rem;
+    margin-right: 35px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.header-icons i:hover {
+    color: #ffc56d; /* Cor ao passar o mouse */
+}
+
+.user-avatar {
+    width: 90px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Estilo Principal do Conteúdo */
+.main-content {
+    display: flex;
+    padding: 20px;
+    margin-top: 70px; /* Corrige a sobreposição com o header */
+}
+
+/* Seção do vídeo */
+
+.video-player-section {
+    margin-top: 50px;
+    width: 70%;
+    padding-right: 20px;
+}
+
+.video-player iframe {
+    width: 100%;
+    height: 500px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilizando a seção de informações do vídeo */
+.video-info {
+    margin-top: 20px;
+}
+
+.video-info h1 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.video-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.video-actions button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border: none;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.video-actions button:hover {
+    background-color: #e1e1e1;
+    transform: translateY(-2px); /* Efeito de levitação */
+}
+
+.video-actions button.active {
+    background-color: #ffb649;
+    color: white;
+}
+
+.channel-info {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.channel-avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.channel-details {
+    flex: 1;
+}
+
+.channel-details h2 {
+    font-size: 1.2rem;
+    color: #333;
+}
+
+.subscribe-button {
+    padding: 10px;
+    background-color: #ffb649;
+    color: rgb(0, 0, 0);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.subscribe-button.subscribed {
+    background-color: #ff9a00;
+}
+
+.subscribe-button:hover {
+    background-color: #ff9a00;
+    transform: translateY(-2px); /* Efeito de levitação */
+}
+
+/* Seção de vídeos sugeridos */
+.suggested-videos {
+    width: 30%;
+}
+
+.suggested-video {
+    margin-top: 60px;
+    display: flex;
+    margin-bottom: -35px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.suggested-video:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.suggested-video img {
+    width: 160px;
+    height: 90px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.suggested-video-info h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.suggested-video-info p {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 15px 0;
+}
+
+/* Footer */
+.main-footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #202020;
+    color: white;
+    margin-top: 20px;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
+}
+
+    
+</style>
+<script>  document.addEventListener('DOMContentLoaded', function() {
+    // Função para lidar com o botão de Like 
+    document.querySelector('.like-button').addEventListener('click', function() {
+        const likeButton = this;
+        const dislikeButton = document.querySelector('.dislike-button');
+        let likeCount = parseInt(likeButton.textContent.match(/\d+/)[0].replace(/\./g, '').replace(/ mil/g, '000'));
+
+        if (likeButton.classList.contains('active')) {
+            likeCount--;
+            likeButton.classList.remove('active');
+        } else {
+            likeCount++;
+            likeButton.classList.add('active');
+            if (dislikeButton.classList.contains('active')) {
+                dislikeButton.classList.remove('active');
+            }
+        }
+
+        likeButton.innerHTML = `<i class="fas fa-thumbs-up"></i> ${likeCount.toLocaleString()}`; // Formatação de número
+    });
+
+    // Função para lidar com o botão de Dislike
+    document.querySelector('.dislike-button').addEventListener('click', function() {
+        const dislikeButton = this;
+        const likeButton = document.querySelector('.like-button');
+
+        if (dislikeButton.classList.contains('active')) {
+            dislikeButton.classList.remove('active');
+        } else {
+            dislikeButton.classList.add('active');
+            if (likeButton.classList.contains('active')) {
+                let likeCount = parseInt(likeButton.textContent.match(/\d+/)[0].replace(/\./g, '').replace(/ mil/g, '000'));
+                likeCount--;
+                likeButton.innerHTML = `<i class="fas fa-thumbs-up"></i> ${likeCount.toLocaleString()}`; // Formatação de número
+                likeButton.classList.remove('active');
+            }
+        }
+    });
+
+    // Função para lidar com o botão de Inscrição
+    document.querySelector('.subscribe-button').addEventListener('click', function() {
+        const subscribeButton = this;
+
+        if (subscribeButton.classList.contains('subscribed')) {
+            subscribeButton.textContent = 'Inscrever-se';
+            subscribeButton.classList.remove('subscribed');
+        } else {
+            subscribeButton.textContent = 'Inscrito';
+            subscribeButton.classList.add('subscribed');
+        }
+    });
+});
+    </script>
