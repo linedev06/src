@@ -13,7 +13,7 @@
     <header class="main-header">
         <div class="menu-logo">
             <i class="fas fa-bars menu-icon"></i>
-            <img src="img/playBranco.png" alt="YouTube Logo" class="play-icon">
+           <a href="youtek.html"><img src="img/playBranco.png" alt="YouTube Logo" class="play-icon"></a> 
         </div>
         <div class="search-area">
             <input type="text" placeholder="Pesquisar" class="search-bar">
@@ -25,7 +25,21 @@
             <img src="img/arquiteto.png" alt="Avatar" class="user-avatar">
         </div>
     </header>
-
+    <aside class="sidebar">
+        <nav>
+            <ul>
+               <a href="youtek.html"><li><i class="fas fa-home"></i> Início</li></a> 
+                <li><i class="fas fa-compass"></i> Explorar</li>
+                <li><i class="fas fa-play"></i> Inscrições</li>
+                <hr>
+                <li><i class="fas fa-history"></i> Histórico</li>
+                <li><i class="fas fa-clock"></i> Assistir mais tarde</li>
+                <li><i class="fas fa-thumbs-up"></i> Vídeos com 'Gostei'</li>
+                <hr>
+            
+            </ul>
+        </nav>
+    </aside>
     <!-- Main Content -->
     <main class="main-content">
         <!-- Video Player Section -->
@@ -347,9 +361,63 @@ hr {
     box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
 }
 
+     
+.sidebar {
+    width: 200px;
+    background-color: #ffffff;
+    padding: 20px;
+    position: fixed;
+    top: 120px;
+    bottom: 0;
+    transition: transform 0.3s ease;
+    transform: translateX(0);
+    border-right: solid 2px #ff9a00;
+}
+
+.sidebar.active {
+    transform: translateX(-100%); 
+}
+
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    cursor: pointer;
+    color: #000000;
+}
+
+.sidebar nav ul li i {
+    margin-right: 20px;
+    color: #ff9a00; 
+}
+
+hr {
+    border-color: #ff9a00;
+    margin: 20px 0;
+}
+
     
 </style>
-<script>  document.addEventListener('DOMContentLoaded', function() {
+<script> 
+         document.addEventListener("DOMContentLoaded", function() {
+            // Aplique a classe "active" para garantir que a sidebar esteja oculta ao carregar a página.
+            document.querySelector(".sidebar").classList.add("active");
+
+            // Adicione um evento de clique ao botão para alternar a visibilidade da sidebar.
+            document.getElementById("toggleSidebar").addEventListener("click", function() {
+                document.querySelector(".sidebar").classList.toggle("active");
+            });
+        });
+   // Para abrir/fechar o menu lateral
+   document.querySelector('.menu-icon').addEventListener('click', function () {
+    const sidebar = document.querySelector('.sidebar');
+    sidebar.classList.toggle('active');
+});
+document.addEventListener('DOMContentLoaded', function() {
     // Função para lidar com o botão de Like 
     document.querySelector('.like-button').addEventListener('click', function() {
         const likeButton = this;
