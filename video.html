@@ -1,0 +1,30 @@
+<!-- video.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Vídeo</title>
+</head>
+<body>
+    <h1>Vídeo Carregado</h1>
+
+    <?php
+    // Verifica se há um parâmetro 'video' na URL
+    if (isset($_GET['video'])) {
+        $videoPath = urldecode($_GET['video']);
+        
+        // Exibe o vídeo, se o caminho for válido
+        if (file_exists($videoPath)) {
+            echo '<video width="640" height="360" controls>
+                    <source src="' . $videoPath . '" type="video/mp4">
+                    Seu navegador não suporta o formato de vídeo.
+                  </video>';
+        } else {
+            echo "Vídeo não encontrado.";
+        }
+    } else {
+        echo "Nenhum vídeo carregado.";
+    }
+    ?>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
+
 <body>
 
     <!-- Header -->
@@ -21,11 +23,41 @@
             <button class="search-button"><i class="fas fa-search"></i></button>
         </div>
         <div class="header-icons">
-            <i class="fas fa-video"></i>
+            <i class="fas fa-video" id="uploadVideoBtn"></i>
             <i class="fas fa-bell"></i>
             <img src="img/arquiteto.png" alt="Avatar" class="user-avatar">
         </div>
     </header>
+
+    <!-- Video Upload Modal -->
+    <div id="videoUploadModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Upload de Vídeo</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="videoUploadForm">
+                    <label for="videoTitle">Título do Vídeo</label>
+                    <input type="text" id="videoTitle" name="videoTitle" required>
+
+                    <label for="videoDescription">Descrição do Vídeo</label>
+                    <textarea id="videoDescription" name="videoDescription" rows="4" required></textarea>
+
+                    <label for="videoFile">Selecione o Vídeo</label>
+                    <input type="file" id="videoFile" name="videoFile" accept="video/*" required>
+
+                    <label for="videoThumbnail">Selecione a Imagem de Capa</label>
+                    <input type="file" id="videoThumbnail" name="videoThumbnail" accept="image/*" required>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancelbtn" onclick="closeModal()">Cancelar</button>
+                <button type="submit" class="uploadbtn" form="videoUploadForm" onclick="submitForm()">Upload</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Sidebar -->
     <aside class="sidebar">
@@ -46,245 +78,265 @@
 
     <!-- Main Content -->
     <main class="main-content" style="margin-top: 150px;">
-        <section class="video-section">
+        <section class="video-section" id="videoSection">
             <!-- Vídeos arquitetônicos -->
-            <a href="video5.html" style="text-decoration: none;"><div class="video-item">
-                <img src="img/tumb1 (2).jpg" alt="Vídeo de Projeto Arquitetônico" class="video-thumbnail">
-                <div class="video-info">
-                    <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
-                    <div class="video-details">
-                        <h3>Visita à Obra Residencial - Andamento do Projeto</h3>
-                        <p>Arquiteto João • 1.2 mil visualizações • 2 dias atrás</p>
+            <a href="video5.html" style="text-decoration: none;">
+                <div class="video-item">
+                    <img src="img/tumb1 (2).jpg" alt="Vídeo de Projeto Arquitetônico" class="video-thumbnail">
+                    <div class="video-info">
+                        <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
+                        <div class="video-details">
+                            <h3>Visita à Obra Residencial - Andamento do Projeto</h3>
+                            <p>Arquiteto João • 1.2 mil visualizações • 2 dias atrás</p>
+                        </div>
                     </div>
                 </div>
-            </div></a>
-    
-            <a href="" style="text-decoration: none;"><div class="video-item">
-                <img src="img/tumb2.jpg" alt="Vídeo de Projeto Arquitetônico" class="video-thumbnail">
-                <div class="video-info">
-                    <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
-                    <div class="video-details">
-                        <h3>Tour 360°: Projeto Comercial - Fase de Acabamento</h3>
-                        <p>Arquiteto Maria • 980 visualizações • 3 dias atrás</p>
+            </a>
+
+            <a href="" style="text-decoration: none;">
+                <div class="video-item">
+                    <img src="img/tumb2.jpg" alt="Vídeo de Projeto Arquitetônico" class="video-thumbnail">
+                    <div class="video-info">
+                        <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
+                        <div class="video-details">
+                            <h3>Tour 360°: Projeto Comercial - Fase de Acabamento</h3>
+                            <p>Arquiteto Maria • 980 visualizações • 3 dias atrás</p>
+                        </div>
                     </div>
                 </div>
-            </div></a>
-    
-            <a href="" style="text-decoration: none;"><div class="video-item" >
-                <img src="img/tumb3.jpg" alt="Vídeo de Projeto Arquitetônico" class="video-thumbnail">
-                <div class="video-info">
-                    <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
-                    <div class="video-details">
-                        <h3>Progresso da Obra Industrial - Atualização Semanal</h3>
-                        <p>Arquiteto • 760 visualizações • 1 semana atrás</p>
+            </a>
+
+            <a href="" style="text-decoration: none;">
+                <div class="video-item">
+                    <img src="img/tumb3.jpg" alt="Vídeo de Projeto Arquitetônico" class="video-thumbnail">
+                    <div class="video-info">
+                        <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
+                        <div class="video-details">
+                            <h3>Progresso da Obra Industrial - Atualização Semanal</h3>
+                            <p>Arquiteto • 760 visualizações • 1 semana atrás</p>
+                        </div>
                     </div>
                 </div>
-            </div></a>
-    
-            <a href="" style="text-decoration: none;"><div class="video-item">
-                <img src="img/tumb4.jpg"  alt="Vídeo de Projeto Arquitetônico em 360°" class="video-thumbnail">
-                <div class="video-info">
-                    <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
-                    <div class="video-details">
-                        <h3>Tour 360°: Construção de Sede Corporativa</h3>
-                        <p>Arquiteto Ana • 1.5 mil visualizações • 2 semanas atrás</p>
+            </a>
+
+            <a href="" style="text-decoration: none;">
+                <div class="video-item">
+                    <img src="img/tumb4.jpg" alt="Vídeo de Projeto Arquitetônico em 360°" class="video-thumbnail">
+                    <div class="video-info">
+                        <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
+                        <div class="video-details">
+                            <h3>Tour 360°: Construção de Sede Corporativa</h3>
+                            <p>Arquiteto Ana • 1.5 mil visualizações • 2 semanas atrás</p>
+                        </div>
                     </div>
                 </div>
-            </div></a>
-  
-            <a href="" style="text-decoration: none;"><div class="video-item">
-                <img src="img/tumb5.jpg" alt="Vídeo de Projeto Arquitetônico" class="video-thumbnail">
-                <div class="video-info">
-                    <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
-                    <div class="video-details">
-                        <h3>Andamento do Projeto de Interiores - Reforma Residencial</h3>
-                        <p>Arquiteto Felipe • 1.1 mil visualizações • 5 dias atrás</p>
+            </a>
+
+            <a href="" style="text-decoration: none;">
+                <div class="video-item">
+                    <img src="img/tumb5.jpg" alt="Vídeo de Projeto Arquitetônico" class="video-thumbnail">
+                    <div class="video-info">
+                        <img src="img/playBrancoNovo.png" alt="Channel Avatar" class="channel-avatar">
+                        <div class="video-details">
+                            <h3>Andamento do Projeto de Interiores - Reforma Residencial</h3>
+                            <p>Arquiteto Felipe • 1.1 mil visualizações • 5 dias atrás</p>
+                        </div>
                     </div>
                 </div>
-            </div></a>
+            </a>
         </section>
     </main>
-    <style>* {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-    
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #e6e6e6;
-        color: #000000; 
-        display: flex;
-    }
-    
-    .main-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 20px;
-        background-color: #ffffff;
-        color: #ff9a00;
-        position: fixed;
-        top: 0;
-        width: 100%;
-        z-index: 1000;
-        border-bottom: solid 2px #ff9a00;
-    }
-    
-    .menu-logo {
-        display: flex;
-        align-items: center;
-    }
-    
-    .play-icon {
-        height: 100px; 
-        margin: 0 20px; 
-        width: 300px; 
-    }
-    
-    .menu-icon {
-        color: #ff9a00; 
-        font-size: 24px;
-        cursor: pointer;
-        margin-right: 20px;
-    }
-    
-    .search-area {
-        display: flex;
-        align-items: center;
-    }
-    
-    .search-bar {
-        width: 500px;
-        padding: 10px;
-        background-color: #e9e9e9; 
-        border: none;
-        color: #ff9a00; 
-    }
-    
-    .search-button {
-        padding: 10px;
-        background-color: #d8d8d8; 
-        border: none;
-        cursor: pointer;
-    }
-    
-    .search-button i {
-        color: #ff9a00; 
-    }
-    
-    .header-icons {
-        display: flex;
-        align-items: center;
-    }
-    
-    .header-icons i {
-        font-size: 20px;
-        margin-right: 20px;
-        cursor: pointer;
-        color: #ff9a00; 
-    }
-    
-    .user-avatar {
-        height: 60px;
-        border-radius: 50%;
-        padding-left: 50px;
-    }
-    
-    .sidebar {
-        width: 200px;
-        background-color: #ffffff;
-        padding: 20px;
-        position: fixed;
-        top: 120px;
-        bottom: 0;
-        transition: transform 0.3s ease;
-        transform: translateX(0);
-        border-right: solid 2px#ff9a00;
-    }
-    
-    .sidebar.active {
-        transform: translateX(-100%); 
-    }
-    
-    .sidebar nav ul {
-        list-style: none;
-    }
-    
-    .sidebar nav ul li {
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-        cursor: pointer;
-        color: #000000;
-    }
-    
-    .sidebar nav ul li i {
-        margin-right: 20px;
-        color: #ff9a00; 
-    }
-    
-    hr {
-        border-color: #ff9a00;
-        margin: 20px 0;
-    }
-    
-    .main-content {
-        margin-left: 220px;
-        margin-top: 80px;
-        padding: 20px;
-        flex: 1;
-    }
-    
-    .video-section {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 20px;
-    }
-    
-    .video-item {
-        background-color: #ffffff;
-        border-radius: 10px;
-        overflow: hidden; /* Adiciona efeito de arredondamento */
-        transition: transform 0.2s; /* Transição suave */
-    }
-    
-    .video-item:hover {
-        transform: scale(1.05); /* Efeito de zoom no hover */
-    }
-    
-    .video-thumbnail {
-        width: 100%;
-        height: 150px; /* Altura fixa para os thumbnails */
-        object-fit: cover; /* Cobre todo o espaço */
-        border-bottom: 2px solid #ff9a00; /* Linha de separação */
-    }
-    
-    .video-info {
-        display: flex;
-        align-items: flex-start;
-        padding: 10px; /* Adicionando padding para o conteúdo */
-    }
-    
-    .channel-avatar {
-        width: 50px;
-        border-radius: 50%;
-        margin-right: 10px;
-    }
-    
-    .video-details h3 {
-        font-size: 16px;
-        color: #ff9a00; 
-        margin: 0; /* Remove margens */
-    }
-    
-    .video-details p {
-        font-size: 14px;
-        color: #b3b3b3; /* Mantendo essa cor inalterada */
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .back-btn{
-        background-color: #FF9A00;
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #e6e6e6;
+            color: #000000;
+            display: flex;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #ffffff;
+            color: #ff9a00;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: solid 2px #ff9a00;
+        }
+
+        .menu-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .play-icon {
+            height: 100px;
+            margin: 0 20px;
+            width: 300px;
+        }
+
+        .menu-icon {
+            color: #ff9a00;
+            font-size: 24px;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .search-area {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar {
+            width: 500px;
+            padding: 10px;
+            background-color: #e9e9e9;
+            border: none;
+            color: #ff9a00;
+        }
+
+        .search-button {
+            padding: 10px;
+            background-color: #d8d8d8;
+            border: none;
+            cursor: pointer;
+        }
+
+        .search-button i {
+            color: #ff9a00;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-icons i {
+            font-size: 20px;
+            margin-right: 20px;
+            cursor: pointer;
+            color: #ff9a00;
+        }
+
+        .user-avatar {
+            height: 60px;
+            border-radius: 50%;
+            padding-left: 50px;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #ffffff;
+            padding: 20px;
+            position: fixed;
+            top: 120px;
+            bottom: 0;
+            transition: transform 0.3s ease;
+            transform: translateX(0);
+            border-right: solid 2px#ff9a00;
+        }
+
+        .sidebar.active {
+            transform: translateX(-100%);
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+        }
+
+        .sidebar nav ul li {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            cursor: pointer;
+            color: #000000;
+        }
+
+        .sidebar nav ul li i {
+            margin-right: 20px;
+            color: #ff9a00;
+        }
+
+        hr {
+            border-color: #ff9a00;
+            margin: 20px 0;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            margin-top: 80px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .video-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .video-item {
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            /* Adiciona efeito de arredondamento */
+            transition: transform 0.2s;
+            /* Transição suave */
+        }
+
+        .video-item:hover {
+            transform: scale(1.05);
+            /* Efeito de zoom no hover */
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 150px;
+            /* Altura fixa para os thumbnails */
+            object-fit: cover;
+            /* Cobre todo o espaço */
+            border-bottom: 2px solid #ff9a00;
+            /* Linha de separação */
+        }
+
+        .video-info {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px;
+            /* Adicionando padding para o conteúdo */
+        }
+
+        .channel-avatar {
+            width: 50px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .video-details h3 {
+            font-size: 16px;
+            color: #ff9a00;
+            margin: 0;
+            /* Remove margens */
+        }
+
+        .video-details p {
+            font-size: 14px;
+            color: #b3b3b3;
+            /* Mantendo essa cor inalterada */
+        }
+
+        .back-btn {
+            background-color: #FF9A00;
             border-radius: 7px;
             border: none;
             color: #fff;
@@ -293,16 +345,265 @@
             height: 30px;
             margin-left: 35px;
 
-    }
-    
+        }
+
+        #videoUploadModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            /* Efeito de desfoque no fundo */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            animation: modalOpen 0.4s;
+        }
+
+        @keyframes modalOpen {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 20px 0;
+        }
+
+        .modal-body label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .modal-body input[type="text"],
+        .modal-body textarea,
+        .modal-body input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-footer button {
+            padding: 10px 20px;
+            margin-left: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-footer .cancelbtn {
+            background-color: #ff9a00;
+            color: white;
+        }
+
+        .modal-footer .uploadbtn {
+            background-color: #ff9a00;
+            color: white;
+        }
+
+        .modal-footer button:hover {
+            opacity: 0.8;
+        }
+
+
+
+
+        label {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0b1742;
+            /* Cor para o texto do label */
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input[type="file"] {
+            background-color: white;
+            border: 2px solid #FF9A00;
+            /* Cor da borda */
+            padding: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            font-size: 14px;
+            font-family: Arial, sans-serif;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="file"]:hover {
+            border-color: #FF9A00;
+            /* A borda fica mais destacada no hover */
+        }
+
+        input[type="file"]:focus {
+            outline: none;
+            border-color: #FF9A00;
+            /* A borda se destaca quando o campo está em foco */
+        }
     </style>
+    <script>
+        // Para abrir/fechar o menu lateral
+        document.querySelector('.menu-icon').addEventListener('click', function () {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.classList.toggle('active');
+        });
+
+        // Função para abrir o modal
+        function openModal() {
+            document.getElementById('videoUploadModal').style.display = 'block';
+        }
+
+        // Função para fechar o modal
+        function closeModal() {
+            document.getElementById('videoUploadModal').style.display = 'none';
+        }
+
+        // Função para enviar o formulário (apenas exemplo, você pode personalizar conforme necessário)
+        function submitForm() {
+            const form = document.getElementById('videoUploadForm');
+            const formData = new FormData(form);
+
+            // Você pode adicionar aqui o código para enviar os dados ao servidor
+            console.log('Formulário enviado:', formData);
+
+            // Fechar o modal após o envio
+            closeModal();
+        }
+
+        // Fechar o modal quando o usuário clicar no "x"
+        document.querySelector('.close').onclick = function () {
+            closeModal();
+        }
+
+        // Fechar o modal se o usuário clicar fora do conteúdo do modal
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('videoUploadModal')) {
+                closeModal();
+            }
+        }
 
 
-<script>
-   // Para abrir/fechar o menu lateral
-document.querySelector('.menu-icon').addEventListener('click', function () {
-    const sidebar = document.querySelector('.sidebar');
-    sidebar.classList.toggle('active');
-});
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.querySelector('.sidebar');
+
+            const videoUploadModal = document.getElementById('videoUploadModal');
+            const closeModal = document.querySelector('.close');
+            const uploadVideoBtn = document.getElementById('uploadVideoBtn');
+            const videoUploadForm = document.getElementById('videoUploadForm');
+            const videoSection = document.getElementById('videoSection');
+
+
+            uploadVideoBtn.addEventListener('click', function () {
+                videoUploadModal.style.display = 'block';
+            });
+
+            closeModal.addEventListener('click', function () {
+                videoUploadModal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function (event) {
+                if (event.target == videoUploadModal) {
+                    videoUploadModal.style.display = 'none';
+                }
+            });
+
+            videoUploadForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                const title = document.getElementById('videoTitle').value;
+                const description = document.getElementById('videoDescription').value;
+                const videoFile = document.getElementById('videoFile').files[0];
+                const thumbnail = document.getElementById('videoThumbnail').files[0];
+
+                if (videoFile && thumbnail) {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const videoSrc = e.target.result;
+
+                        const videoItem = document.createElement('div');
+                        videoItem.className = 'video-item';
+
+                        const thumbnailURL = URL.createObjectURL(thumbnail);
+                        videoItem.innerHTML = `
+                            <img src="${thumbnailURL}" class="video-thumbnail" alt="Thumbnail">
+                            <div class="video-info">
+                                <img src="img/arquiteto.png" class="channel-avatar" alt="Channel Avatar">
+                                <div class="video-details">
+                                    <h3>${title}</h3>
+                                    <p>${description}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        videoSection.appendChild(videoItem);
+                        videoUploadModal.style.display = 'none';
+                        videoUploadForm.reset();
+                    };
+
+                    reader.readAsDataURL(videoFile);
+                } else {
+                    alert('Por favor, selecione um arquivo de vídeo e uma imagem de capa.');
+                }
+            });
+        });
 
     </script>
