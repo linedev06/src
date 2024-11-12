@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Blocos</title>
+    <style>
+        body {
+            display: flex;
+            background-color: #ffffff;
+            color: #FF9A00;
+        }
+
+        #menu {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            background-color: #ffe4bc;
+            padding: 10px;
+            border-right: 2px solid #ff9900;
+        }
+
+        .menu-section {
+            margin-bottom: 20px;
+        }
+
+        .menu-section h3 {
+            margin-bottom: 10px;
+            color: #FF9A00;
+        }
+
+        .menu-item, .furniture {
+            padding: 5px;
+            cursor: pointer;
+            color: #000000;
+            border: 1px solid #FF9A00;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .menu-item:hover, .furniture:hover {
+            background-color: #FF9A00;
+            color: #0B1742;
+        }
+
+        .furniture {
+            height: 40px;
+            width: 40px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        #canvas-container {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        canvas {
+            border: 2px solid #FF9A00;
+            display: block;
+            margin: 10px;
+        }
+
+   .layer-tabs {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    z-index: 9999;
+    background-color: rgba(255, 255, 255, 0.15);  
+    padding: 15px;
+    border: solid 3px #ff9a00;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+}
+
+.layer-tab {
+    padding: 14px 24px;
+    cursor: pointer;
+    background-color: #FF9A00; 
+    margin-bottom: 12px;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 8px;
+    font-weight: 600;  
+    text-transform: uppercase;
+    letter-spacing: 1px;  
+    font-size: 14px; 
+    transition: all 0.3s ease;  
+}
+
+.layer-tab:hover {
+    background-color: #e87e00;  
+    transform: translateY(-3px);  
+}
+
+.layer-tab.active {
+    background-color: #003366;  
+    color: #FF9A00;
+    border: 2px solid #FF9A00;
+
+}
+
+.layer-tab:last-child {
+    margin-bottom: 0;
+}
+
+
+
+        .furniture-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="menu">
+        <div class="menu-section">
+            <h3>Blocos</h3>
+            <div class="menu-item" onclick="selectBlock('terra')">Terra</div>
+            <div class="menu-item" onclick="selectBlock('pedra')">Pedra</div>
+            <div class="menu-item" onclick="selectBlock('grama')">Grama</div>
+            <div class="menu-item" onclick="selectBlock('madeira')">Madeira</div>
+            <div class="menu-item" onclick="selectBlock('vidro')">Vidro</div>
+            <div class="menu-item" onclick="selectBlock('areia')">Areia</div>
+            <div class="menu-item" onclick="selectBlock('lava')">Água</div>
+        </div>
+        <div class="menu-section">
+            <h3>Móveis</h3>
+            <div class="furniture-container">
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/chair.png')" onclick="selectFurniture('chair')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/table.png')" onclick="selectFurniture('table')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/bed.png')" onclick="selectFurniture('bed')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/sofa.png')" onclick="selectFurniture('sofa')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/lamp.png')" onclick="selectFurniture('lamp')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/fridge.png')" onclick="selectFurniture('fridge')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/cupboard.png')" onclick="selectFurniture('cupboard')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/sink.png')" onclick="selectFurniture('sink')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/microwave.png')" onclick="selectFurniture('microwave')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/washing-machine.png')" onclick="selectFurniture('washing-machine')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/wardrobe.png')" onclick="selectFurniture('wardrobe')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/shower.png')" onclick="selectFurniture('shower')"></div>
+                <div class="furniture" style="background-image: url('https://img.icons8.com/ios/452/toilet.png')" onclick="selectFurniture('toilet')"></div>
+            </div>
+        </div>
+        <div class="menu-section">
+            <h3>Fios</h3>
+            <div class="menu-item" onclick="selectWire('red')">Vermelho</div>
+            <div class="menu-item" onclick="selectWire('green')">Verde</div>
+            <div class="menu-item" onclick="selectWire('blue')">Azul</div>
+        </div>
+    </div>
+    <div id="canvas-container">
+       <center><canvas id="canvas" width="1300" height="900"></canvas></center> 
+        <div class="layer-tabs">
+            <div class="layer-tab" id="tab-blocks" onclick="setCurrentLayer('blocks')">Blocos</div>
+            <div class="layer-tab" id="tab-furniture" onclick="setCurrentLayer('furniture')">Móveis</div>
+            <div class="layer-tab" id="tab-wires" onclick="setCurrentLayer('wires')">Fios</div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        const blockSize = 20;
+        let blocks = [];
+        let furniture = [];
+        let wires = [];
+
+        let selectedBlock = null;
+        let selectedFurniture = null;
+        let selectedWire = null;
+
+        let currentLayer = 'blocks';
+
+        canvas.addEventListener('click', function (event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            const blockX = Math.floor(x / blockSize) * blockSize;
+            const blockY = Math.floor(y / blockSize) * blockSize;
+
+            if (selectedBlock && currentLayer === 'blocks') {
+                blocks.push({ type: selectedBlock, x: blockX, y: blockY });
+            } else if (selectedFurniture && currentLayer === 'furniture') {
+                furniture.push({ type: selectedFurniture, x: blockX, y: blockY });
+            } else if (selectedWire && currentLayer === 'wires') {
+                wires.push({ type: selectedWire, x: blockX, y: blockY });
+            }
+
+            draw();
+        });
+
+        function selectBlock(type) {
+            selectedBlock = type;
+            selectedFurniture = null;
+            selectedWire = null;
+        }
+
+        function selectFurniture(type) {
+            selectedBlock = null;
+            selectedFurniture = type;
+            selectedWire = null;
+        }
+
+        function selectWire(type) {
+            selectedBlock = null;
+            selectedFurniture = null;
+            selectedWire = type;
+        }
+
+        function setCurrentLayer(layer) {
+            currentLayer = layer;
+            document.querySelectorAll('.layer-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById('tab-' + layer).classList.add('active');
+            draw();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Desenhar blocos
+            blocks.forEach(block => {
+                ctx.fillStyle = getBlockColor(block.type);
+                ctx.fillRect(block.x, block.y, blockSize, blockSize);
+            });
+
+            // Desenhar móveis
+            furniture.forEach(furnitureItem => {
+                const img = new Image();
+                img.src = getFurnitureImage(furnitureItem.type);
+                img.onload = () => {
+                    ctx.drawImage(img, furnitureItem.x, furnitureItem.y, blockSize, blockSize);
+                };
+            });
+
+            // Desenhar fios
+            wires.forEach(wire => {
+                ctx.fillStyle = getWireColor(wire.type);
+                ctx.fillRect(wire.x, wire.y, 10, 10);
+            });
+
+            // Desenhar grade
+            ctx.strokeStyle = '#ccc';
+            for (let x = 0; x < canvas.width; x += blockSize) {
+                for (let y = 0; y < canvas.height; y += blockSize) {
+                    ctx.strokeRect(x, y, blockSize, blockSize);
+                }
+            }
+        }
+
+        function getBlockColor(type) {
+            switch (type) {
+                case 'terra': return '#deb887';
+                case 'pedra': return '#a9a9a9';
+                case 'grama': return '#00ff00';
+                case 'madeira': return '#8b4513';
+                case 'vidro': return '#87ceeb';
+                case 'areia': return '#f4a460';
+                case 'lava': return '#0037ff';
+                default: return '#000000';
+            }
+        }
+
+        function getFurnitureImage(type) {
+    switch (type) {
+        case 'chair': return 'https://img.icons8.com/ios/452/chair.png';
+        case 'table': return 'https://img.icons8.com/ios/452/table.png';
+        case 'bed': return 'https://img.icons8.com/ios/452/bed.png';
+        case 'bookshelf': return 'https://img.icons8.com/ios/452/bookshelf.png';
+        case 'office-chair': return 'https://img.icons8.com/ios/452/office-chair.png';
+        case 'sofa': return 'https://img.icons8.com/ios/452/sofa.png';
+        case 'dining-table': return 'https://img.icons8.com/ios/452/dining-table.png';
+        case 'bookshelf-2': return 'https://img.icons8.com/ios/452/bookshelf.png';
+        case 'lamp': return 'https://img.icons8.com/ios/452/lamp.png';
+        case 'fridge': return 'https://img.icons8.com/ios/452/fridge.png';
+        case 'cupboard': return 'https://img.icons8.com/ios/452/cupboard.png';
+        case 'sink': return 'https://img.icons8.com/ios/452/sink.png';
+        case 'stove': return 'https://img.icons8.com/ios/452/stove.png';
+        case 'microwave': return 'https://img.icons8.com/ios/452/microwave.png';
+        case 'washing-machine': return 'https://img.icons8.com/ios/452/washing-machine.png';
+        case 'wardrobe': return 'https://img.icons8.com/ios/452/wardrobe.png';
+        case 'bathtub': return 'https://img.icons8.com/ios/452/bathtub.png';
+        case 'shower': return 'https://img.icons8.com/ios/452/shower.png';
+        case 'toilet': return 'https://img.icons8.com/ios/452/toilet.png';
+        default: return '';
+    }
+}
+        
+
+        function getWireColor(type) {
+            switch (type) {
+                case 'red': return '#ff0000';
+                case 'green': return '#00ff00';
+                case 'blue': return '#0000ff';
+                default: return '#000000';
+            }
+        }
+
+        draw();
+    </script>
+</body>
+
+</html>
