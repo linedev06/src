@@ -115,6 +115,12 @@
             flex-wrap: wrap;
             gap: 10px;
         }
+
+        hr {
+            background-color: #ff9900;
+            border: none;
+            height: 2px;
+        }
     </style>
 </head>
 
@@ -154,6 +160,8 @@
             <div class="menu-item" onclick="selectWire('green')">Verde</div>
             <div class="menu-item" onclick="selectWire('blue')">Azul</div>
         </div>
+        <div style="margin-top: -20px;"><hr style="background-color: #ff9900;"></div>
+        <a href="lobbyperfil1.html"><button class="back-to-lobby"  style="background-color: #ff9900; border-radius: 12px; border: none; height: 30px; width: 200px;" onclick="backToLobby()">Voltar ao Lobby</button></a>
     </div>
     <div id="canvas-container">
        <center><canvas id="canvas" width="1300" height="900"></canvas></center> 
