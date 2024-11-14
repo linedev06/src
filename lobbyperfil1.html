@@ -263,6 +263,16 @@
     margin: 0;
     font-size: 16px;
 }
+.flex-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .optional-text {
+            color: rgb(0, 0, 0);
+            margin-left: 5px; /* Adiciona espaço entre os elementos */
+        }
     </style>
     <script>
         let plantsVisible = false; // Track visibility state of the plants
@@ -296,7 +306,10 @@
         // Function to display user's plants
         function showPlants() {
             document.getElementById('content').innerHTML = `
-                <h2>Minhas Plantas</h2>
+                 <div class="flex-container">
+        <h2>Minhas Plantas</h2>
+        <div class="optional-text">*opcional*</div>
+    </div>
                 <ul class="plants-list">
                     <li>
                         <h3>Planta 1</h3>

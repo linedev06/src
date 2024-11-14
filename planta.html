@@ -121,6 +121,16 @@
             border: none;
             height: 2px;
         }
+        .flex-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .optional-text {
+            color: rgb(255, 70, 70);
+            margin-left: 5px; /* Adiciona espaço entre os elementos */
+        }
     </style>
 </head>
 
@@ -155,7 +165,10 @@
             </div>
         </div>
         <div class="menu-section">
-            <h3>Fios</h3>
+            <div class="flex-container">
+                <h3>Fios</h3>
+                <div class="optional-text">*opcional*</div>
+            </div>
             <div class="menu-item" onclick="selectWire('red')">Vermelho</div>
             <div class="menu-item" onclick="selectWire('green')">Verde</div>
             <div class="menu-item" onclick="selectWire('blue')">Azul</div>
