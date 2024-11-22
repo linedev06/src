@@ -362,6 +362,199 @@
 </section>
 
 
+<section class="login-section" style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #fff2db, #ffba53);
+    height: 100vh;
+">
+
+    <!-- Caixa de Login Profissional -->
+    <div class="login-box" style="
+        background-color: #ffffff;
+        width: 420px;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        transition: all 0.3s ease;
+    ">
+        <!-- Título da Área -->
+        <h2 style="
+            font-size: 2.5em;
+            font-weight: 700;
+            color: #0B1742;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            font-family: 'Arial', sans-serif;
+        ">
+            Área do Arquiteto
+        </h2>
+
+        <div class="divider" style="
+            width: 60px;
+            height: 3px;
+            background-color: #FF9A00;
+            margin-bottom: 30px;
+            border-radius: 4px;
+        "></div>
+
+        <!-- Formulário de Login -->
+     
+
+
+            <!-- Campo de Email -->
+            <div class="form-group" style="margin-bottom: 25px;">
+                <label for="email" style="
+                    font-size: 1.1em;
+                    font-weight: 500;
+                    color: #555;
+                    margin-bottom: 8px;
+                    display: block;
+                    font-family: 'Arial', sans-serif;
+                ">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="Digite seu e-mail profissional" required style="
+                    width: 100%;
+                    padding: 15px;
+                    border: 1px solid #ccc;
+                    border-radius: 10px;
+                    font-size: 1.1em;
+                    font-family: 'Arial', sans-serif;
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                " onfocus="this.style.borderColor='#FF9A00'; this.style.boxShadow='0 0 10px rgba(255, 154, 0, 0.5)'" onblur="this.style.borderColor='#ccc'; this.style.boxShadow='none'">
+            </div>
+
+            <!-- Campo de Senha -->
+            <div class="form-group" style="margin-bottom: 35px;">
+                <label for="senha" style="
+                    font-size: 1.1em;
+                    font-weight: 500;
+                    color: #555;
+                    margin-bottom: 8px;
+                    display: block;
+                    font-family: 'Arial', sans-serif;
+                ">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required style="
+                    width: 100%;
+                    padding: 15px;
+                    border: 1px solid #ccc;
+                    border-radius: 10px;
+                    font-size: 1.1em;
+                    font-family: 'Arial', sans-serif;
+                    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+                " onfocus="this.style.borderColor='#FF9A00'; this.style.boxShadow='0 0 10px rgba(255, 154, 0, 0.5)'" onblur="this.style.borderColor='#ccc'; this.style.boxShadow='none'">
+            </div>
+
+            <!-- Botão de Login -->
+            <a href="arqui.html">
+              <button type="submit" style="
+                  background-color: #FF9A00;
+                  color: white;
+                  padding: 16px;
+                  width: 200%;
+                  border: none;
+                  border-radius: 10px;
+                  font-size: 1.2em;
+                  font-weight: bold;
+                  cursor: pointer;
+                  transition: background-color 0.3s ease, transform 0.3s ease;
+                  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                  margin-left: -50%; /* Ajusta o botão para a esquerda */
+              " onmouseover="this.style.backgroundColor='#FF7F00'; this.style.transform='scale(1.05)'" onmouseout="this.style.backgroundColor='#FF9A00'; this.style.transform='scale(1)'">
+                  Entrar
+              </button>
+          </a>
+          
+
+        </form>
+
+        <!-- Esqueci minha senha -->
+        <a href="recuperar-senha.html" style="
+            font-size: 1.1em;
+            color: #FF9A00;
+            text-decoration: none;
+            margin-top: 25px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            font-family: 'Arial', sans-serif;
+        " onmouseover="this.style.color='#FF7F00'" onmouseout="this.style.color='#FF9A00'">
+            Esqueci minha senha
+        </a>
+    </div>
+
+</section>
+
+<!-- Estilos Adicionais -->
+<style>
+    /* Caixa de login com sombra e arredondamento */
+    .login-box {
+        background-color: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 420px;
+        transition: all 0.3s ease;
+    }
+
+    /* Efeito nos campos de entrada */
+    .form-group input:focus {
+        border-color: #FF9A00;
+        box-shadow: 0 0 10px rgba(255, 154, 0, 0.5);
+    }
+
+    /* Botão de Login */
+    .form-group button {
+        width: 100%;
+        padding: 16px;
+        background-color: #FF9A00;
+        color: white;
+        font-size: 1.2em;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Hover Effect para o botão */
+    .form-group button:hover {
+        background-color: #FF7F00;
+        transform: scale(1.05);
+    }
+
+    /* Link de recuperação de senha */
+    a {
+        font-size: 1.1em;
+        color: #FF9A00;
+        text-decoration: none;
+        margin-top: 25px;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Hover Effect para o link */
+    a:hover {
+        color: #FF7F00;
+    }
+
+    /* Divisor estilizado */
+    .divider {
+        width: 60px;
+        height: 3px;
+        background-color: #FF9A00;
+        margin-bottom: 30px;
+        border-radius: 4px;
+    }
+
+</style>
+
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
@@ -430,7 +623,7 @@
 
 <footer>© 2024 Tekton. Todos os direitos reservados.
   <p><a href="Porque.html">Email:</a> tekton.projetos01@gmail.com</p>
-  <p>Telefone:<a href="baixar.html">(XX)</a>XXXX-XXXX</p>
+  <p>Telefone:<a href="arqui.html">(XX)</a>XXXX-XXXX</p>
   <p>Siga-nos no Instagram: <a href="https://www.instagram.com/tekton.pjt/">@tekton.pjt</a></p>
 </footer>
 </body>

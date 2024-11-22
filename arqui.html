@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .header, .content {
+            border: solid 1px #ff9a00;
+            padding: 20px;
+            background: #f5f5f5;
+            color: rgb(0, 15, 43);
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            margin: 10px 0;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background: #0b1742;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #ff9a00;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: #f9f9f9;
+            transition: border 0.3s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #ff9a00;
+            outline: none;
+        }
+        .balloon {
+            display: none;
+            position: absolute;
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            z-index: 2;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .inactive {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Project Management Dashboard</h1>
+            <button class="btn" id="addClient">Adicionar Cliente</button>
+            <button class="btn" id="addProject">Adicionar Projeto</button>
+            <!-- Botão para voltar ao index.html -->
+            <button class="btn" id="backToHome" onclick="location.href='index.html'">Voltar para o Início</button>
+        </div>
+
+        <div class="content">
+            <h2>Clientes</h2>
+            <ul id="clientList"></ul>
+
+            <h2>Projetos</h2>
+            <ul id="projectList"></ul>
+        </div>
+    </div>
+
+    <!-- Modal de Adicionar Cliente -->
+    <div id="clientModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeClientModal">&times;</span>
+            <h2>Adicionar Cliente</h2>
+            <div class="form-group">
+                <label for="clientName">Nome:</label>
+                <input type="text" id="clientName">
+            </div>
+            <div class="form-group">
+                <label for="clientEmail">Email:</label>
+                <input type="email" id="clientEmail">
+            </div>
+            <button class="btn" id="saveClient">Salvar</button>
+        </div>
+    </div>
+
+    <!-- Modal de Adicionar Projeto -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeProjectModal">&times;</span>
+            <h2>Adicionar Projeto</h2>
+            <div class="form-group">
+                <label for="projectName">Nome do Projeto:</label>
+                <input type="text" id="projectName">
+            </div>
+            <div class="form-group">
+                <label for="projectClient">Cliente:</label>
+                <select id="projectClient"></select>
+            </div>
+            <div class="form-group">
+                <label for="projectDeadline">Prazo:</label>
+                <input type="date" id="projectDeadline">
+            </div>
+            <div class="form-group">
+                <label for="projectBudget">Orçamento:</label>
+                <input type="number" id="projectBudget">
+            </div>
+            <div class="form-group">
+                <label for="projectStatus">Status:</label>
+                <select id="projectStatus">
+                    <option value="Em andamento">Em andamento</option>
+                    <option value="Concluído">Concluído</option>
+                    <option value="Atrasado">Atrasado</option>
+                </select>
+            </div>
+            <button class="btn" id="saveProject">Salvar</button>
+        </div>
+    </div>
+
+    <!-- Balão de Mensagem -->
+    <div id="balloon" class="balloon">cliente nao possui tal projeto</div>
+
+    <script>
+        const clients = [];
+        const projects = [];
+
+        // Função para adicionar cliente à lista
+        function addClientToList(name, email) {
+            const client = { name, email };
+            clients.push(client);
+            const li = document.createElement('li');
+            li.className = 'card';
+            li.innerHTML = `<strong>${name}</strong><br>${email}`;
+
+            // Adicionar quatro botões com links
+            const buttonContainer = document.createElement('div');
+            const projectLinks = ['pro1.html', 'pro2.html', 'pro3.html', 'pro4.html'];
+            for (let i = 0; i < 4; i++) {
+                const button = document.createElement('button');
+                button.className = 'btn project-btn';
+                button.textContent = `Projeto ${i + 1}`;
+                button.dataset.link = projectLinks[i];
+                button.addEventListener('click', function() {
+                    if (!button.classList.contains('inactive')) {
+                        window.location.href = button.dataset.link;
+                    }
+                });
+                buttonContainer.appendChild(button);
+            }
+            li.appendChild(buttonContainer);
+            document.getElementById('clientList').appendChild(li);
+
+            // Randomizar botões ativos e inativos
+            const buttons = buttonContainer.querySelectorAll('.project-btn');
+            const randomIndex = Math.floor(Math.random() * 4);
+            buttons.forEach((button, index) => {
+                if (index !== randomIndex) {
+                    button.classList.add('inactive');
+                    button.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        showBalloon(e);
+                    });
+                }
+            });
+
+            updateProjectClientOptions();
+        }
+
+        // Função para exibir o balão de mensagem
+        function showBalloon(event) {
+            const balloon = document.getElementById('balloon');
+            balloon.style.left = event.pageX + 'px';
+            balloon.style.top = event.pageY + 'px';
+            balloon.style.display = 'block';
+            setTimeout(() => {
+                balloon.style.display = 'none';
+            }, 2000);
+        }
+
+        // Função para adicionar projeto à lista
+        function addProjectToList(name, client, deadline, budget, status) {
+            const project = { name, client, deadline, budget, status };
+            projects.push(project);
+            const li = document.createElement('li');
+            li.className = 'card';
+            li.innerHTML = `
+                <strong>${name}</strong><br>
+                Cliente: ${client}<br>
+                Prazo: ${deadline}<br>
+                Orçamento: $${budget}<br>
+                Status: ${status}
+            `;
+            document.getElementById('projectList').appendChild(li);
+        }
+
+        // Atualiza as opções do cliente no formulário de projeto
+        function updateProjectClientOptions() {
+            const select = document.getElementById('projectClient');
+            select.innerHTML = '';
+            clients.forEach(client => {
+                const option = document.createElement('option');
+                option.value = client.name;
+                option.textContent = client.name;
+                select.appendChild(option);
+            });
+        }
+
+        // Modal de Adicionar Cliente
+        const clientModal = document.getElementById('clientModal');
+        document.getElementById('addClient').addEventListener('click', () => {
+            clientModal.style.display = 'flex';
+        });
+        document.getElementById('closeClientModal').addEventListener('click', () => {
+            clientModal.style.display = 'none';
+        });
+        document.getElementById('saveClient').addEventListener('click', () => {
+            const name = document.getElementById('clientName').value;
+            const email = document.getElementById('clientEmail').value;
+            addClientToList(name, email);
+            clientModal.style.display = 'none';
+        });
+
+        // Modal de Adicionar Projeto
+        const projectModal = document.getElementById('projectModal');
+        document.getElementById('addProject').addEventListener('click', () => {
+            projectModal.style.display = 'flex';
+        });
+        document.getElementById('closeProjectModal').addEventListener('click', () => {
+            projectModal.style.display = 'none';
+        });
+        document.getElementById('saveProject').addEventListener('click', () => {
+            const name = document.getElementById('projectName').value;
+            const client = document.getElementById('projectClient').value;
+            const deadline = document.getElementById('projectDeadline').value;
+            const budget = document.getElementById('projectBudget').value;
+            const status = document.getElementById('projectStatus').value;
+            addProjectToList(name, client, deadline, budget, status);
+            projectModal.style.display = 'none';
+        });
+
+        // Fechar modal ao clicar fora do conteúdo
+        window.addEventListener('click', (event) => {
+            if (event.target === clientModal) {
+                clientModal.style.display = 'none';
+            } else if (event.target === projectModal) {
+                projectModal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
