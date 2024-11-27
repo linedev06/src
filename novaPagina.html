@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realidade Aumentada - Conecte seu óculos de realidade aumentada para vizualizar seus projetos</title>
+    <style>
+        /* Estilos básicos da página */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+            position: absolute;
+            top: 20px;
+            width: 100%;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #FF9A00;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #FF7F00;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        /* Estilos para garantir que o AR funcione corretamente */
+        a-scene {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Visualização de Paisagens em Realidade Aumentada</h1>
+        <button id="start-ar">Ativar Realidade Aumentada</button>
+    </div>
+
+    <!-- A-Frame Scene com AR.js -->
+    <a-scene embedded arjs>
+        <!-- Usando marcador 'hiro' para ativar a visualização 3D -->
+        <a-marker preset="hiro">
+            <!-- Modelo 3D de uma árvore (exemplo de paisagem) -->
+            <a-entity 
+                gltf-model="url(https://example.com/tree_model.glb)" 
+                scale="2 2 2" 
+                position="0 0 0" 
+                rotation="0 0 0">
+            </a-entity>
+
+            <!-- Modelo 3D de uma casa -->
+            <a-entity 
+                gltf-model="url(https://example.com/house_model.glb)" 
+                scale="2 2 2" 
+                position="1 0 0" 
+                rotation="0 45 0">
+            </a-entity>
+            
+            <!-- Mais modelos 3D podem ser adicionados aqui -->
+        </a-marker>
+        
+        <a-camera></a-camera>
+    </a-scene>
+
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jeromeetienne/AR.js/aframe/aframe-ar.js"></script>
+    <script>
+        // Ativar Realidade Aumentada quando o botão for pressionado
+        document.getElementById('start-ar').addEventListener('click', function() {
+            let scene = document.querySelector('a-scene');
+            scene.enterVR();  // Inicia a visualização em AR
+        });
+    </script>
+</body>
+</html>
