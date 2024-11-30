@@ -1,51 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ambiente 360º VR</title>
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.46/build/spline-viewer.js"></script>
+    <title>Sala VR Interativa com Cubo Giratório</title>
     <style>
         body, html {
-            height: 100%;
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
+            background-color: black;
         }
-        .vr-container {
-            width: 100%;
+
+        a-scene {
             height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
+            width: 100%;
         }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
+
+        canvas {
+            display: block;
         }
     </style>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
-    <div class="vr-container">
-        <spline-viewer 
-            loading-anim-type="spinner-small-light" 
-            url="https://prod.spline.design/q5Bq6UgySYdVrbiQ/scene.splinecode" 
-            style="width: 100%; height: 100%;">
-        </spline-viewer>
-    </div>
+    <a-scene>
+        <!-- Ambiente VR -->
+        <a-sky color="black"></a-sky>
+        
 
-    <script>
-        document.querySelector('spline-viewer').addEventListener('load', () => {
-            const viewer = document.querySelector('spline-viewer');
+        <!-- Cubo Giratório -->
+        <a-entity id="rotating-cube" geometry="primitive: box; height: 1; width: 1; depth: 1" material="color: #00ff00" position="0 1 -5">
+        </a-entity>
 
-            // Detectar dispositivos VR
-            if (navigator.getVRDisplays) {
-                // Entrar no modo VR automaticamente se um dispositivo VR for detectado
-                viewer.enterVR();
-            } else {
-                console.log('Dispositivo VR não detectado.');
-            }
-        });
-    </script>
+        <!-- Caméra para VR -->
+        <a-camera position="0 1.6 -2.5" look-controls="pointerLockEnabled: true; touchEnabled: true;"></a-camera>
+
+        <script>
+            // Animação do cubo rotacionando
+            var cube = document.querySelector('#rotating-cube');
+            var rotateCube = function () {
+                requestAnimationFrame(rotateCube);
+                // Rotação do cubo
+                cube.object3D.rotation.x += 0.01;
+                cube.object3D.rotation.y += 0.01;
+            };
+            rotateCube();
+        </script>
+    </a-scene>
 </body>
 </html>
