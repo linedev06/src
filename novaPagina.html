@@ -1,29 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VR 360 Video Environment</title>
-  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-  <style>
-    body { margin: 0; }
-    #container { width: 100%; height: 100vh; background-color: white; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambiente 360º VR</title>
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.46/build/spline-viewer.js"></script>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+        }
+        .vr-container {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-  <div id="container">
-    <a-scene embedded>
-      <!-- Camera setup -->
-      <a-entity camera look-controls position="0 1.6 0"></a-entity>
+    <div class="vr-container">
+        <spline-viewer 
+            loading-anim-type="spinner-small-light" 
+            url="https://prod.spline.design/q5Bq6UgySYdVrbiQ/scene.splinecode" 
+            style="width: 100%; height: 100%;">
+        </spline-viewer>
+    </div>
 
-      <!-- Video Setup -->
-      <a-assets>
-        <video id="video360" src="img/Vídeo do WhatsApp de 2024-11-30 à(s) 16.29.16_d8fb5845.mp4" autoplay loop="true" webkit-playsinline playsinline crossorigin="anonymous"></video>
-      </a-assets>
+    <script>
+        document.querySelector('spline-viewer').addEventListener('load', () => {
+            const viewer = document.querySelector('spline-viewer');
 
-      <!-- Background video with adjustments to minimize distortion -->
-      <a-videosphere src="#video360" radius="5000" segments-width="64" segments-height="64" rotation="0 -90 0"></a-videosphere>
-    </a-scene>
-  </div>
+            // Detectar dispositivos VR
+            if (navigator.getVRDisplays) {
+                // Entrar no modo VR automaticamente se um dispositivo VR for detectado
+                viewer.enterVR();
+            } else {
+                console.log('Dispositivo VR não detectado.');
+            }
+        });
+    </script>
 </body>
 </html>
