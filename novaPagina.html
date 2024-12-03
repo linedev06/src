@@ -26,26 +26,29 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
-    <a-scene vr-mode-ui="enabled: true" 
-             xrweb="tracked-controls" 
-             embedded>
+    <a-scene>
         <!-- Ambiente VR -->
         <a-sky color="black"></a-sky>
-
-        <!-- Modelo 3D -->
+        
+        <!-- Modelo 3D Giratório -->
+         
         <a-entity id="rotating-model" 
                   obj-model="obj: url(download/Tektõn%203D.obj)" 
-                  position="0 0 -5"
+                  position="0 -1 -5"
                   scale="0.1 0.1 0.1">
         </a-entity>
 
         <!-- Câmera para VR -->
-        <a-entity id="user-camera"
-                  camera
-                  wasd-controls
-                  position="0 20 -4" 
-                  look-controls>
-        </a-entity>
+        <a-camera position="0 80.6 400" look-controls="pointerLockEnabled: true; touchEnabled: true;"></a-camera>
+
+        <script>
+             var model = document.querySelector('#rotating-model');
+            var rotateModel = function () {
+                requestAnimationFrame(rotateModel);
+  
+                model.object3D.rotation.y += 0.01;
+            };
+            rotateModel();        </script>
     </a-scene>
 </body>
 </html>
