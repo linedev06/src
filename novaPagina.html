@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sala VR Interativa com Cubo Giratório</title>
+    <title>Sala VR Interativa com Modelo 3D</title>
     <style>
         body, html {
             margin: 0;
@@ -26,29 +26,26 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 </head>
 <body>
-    <a-scene>
+    <a-scene vr-mode-ui="enabled: true" 
+             xrweb="tracked-controls" 
+             embedded>
         <!-- Ambiente VR -->
         <a-sky color="black"></a-sky>
-        
 
-        <!-- Cubo Giratório -->
-        <a-entity id="rotating-cube" geometry="primitive: box; height: 1; width: 1; depth: 1" material="color: #00ff00" position="0 1 -5">
+        <!-- Modelo 3D -->
+        <a-entity id="rotating-model" 
+                  obj-model="obj: url(download/Tektõn%203D.obj)" 
+                  position="0 0 -5"
+                  scale="0.1 0.1 0.1">
         </a-entity>
 
-        <!-- Caméra para VR -->
-        <a-camera position="0 1.6 -4" look-controls="pointerLockEnabled: true; touchEnabled: true;"></a-camera>
-
-        <script>
-            // Animação do cubo rotacionando
-            var cube = document.querySelector('#rotating-cube');
-            var rotateCube = function () {
-                requestAnimationFrame(rotateCube);
-                // Rotação do cubo
-                cube.object3D.rotation.x += 0.01;
-                cube.object3D.rotation.y += 0.01;
-            };
-            rotateCube();
-        </script>
+        <!-- Câmera para VR -->
+        <a-entity id="user-camera"
+                  camera
+                  wasd-controls
+                  position="0 20 -4" 
+                  look-controls>
+        </a-entity>
     </a-scene>
 </body>
 </html>
