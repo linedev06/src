@@ -27,18 +27,18 @@
 </head>
 <body>
     <a-scene>
-        <!-- Ambiente VR -->
+
         <a-sky color="black"></a-sky>
         
-        <!-- Modelo 3D Giratório -->
+        
         <a-entity id="rotating-model" 
                   obj-model="obj: url(download/Tektõn%203D.obj); mtl: url(download/materials.mtl)"
                   position="0 0 -50"
                   scale="0.1 0.1 0.1">
         </a-entity>
 
-        <!-- Câmera para VR -->
-        <a-entity id="camera" camera position="0 -90 400" look-controls="pointerLockEnabled: true; touchEnabled: true;"></a-entity>
+  
+        <a-entity id="camera" camera position="0 90 400" look-controls="pointerLockEnabled: true; touchEnabled: true;"></a-entity>
 
         <script>
             var model = document.querySelector('#rotating-model');
