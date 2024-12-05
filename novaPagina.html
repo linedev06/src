@@ -27,7 +27,7 @@
 </head>
 <body>
     <a-scene>
-        <!-- Ambiente VR -->
+
         <a-sky color="black"></a-sky>
         
         <!-- Modelo 3D Giratório -->
@@ -37,25 +37,23 @@
                   scale="0.1 0.1 0.1">
         </a-entity>
 
-        <!-- Câmera para VR -->
-        <a-entity camera position="0 90 400" look-controls="pointerLockEnabled: true; touchEnabled: true;" id="camera"></a-entity>
-
-        <script>
-            var model = document.querySelector('#rotating-model');
-            var camera = document.querySelector('#camera');
-            
-            // Função para girar o modelo
-            var rotateModel = function () {
-                requestAnimationFrame(rotateModel);
-                model.object3D.rotation.y += 0.01;
-            };
-            rotateModel();
-            
-            // Função para garantir que a câmera permaneça no alto
-            camera.addEventListener('enter-vr', function () {
-                camera.setAttribute('position', '0 90 400');
-            });
-        </script>
-    </a-scene>
-</body>
-</html>
+     
+                <!-- Câmera -->
+                <a-entity camera look-controls position="0 90 400"></a-entity>
+        
+                <script>
+                  AFRAME.registerComponent('rotate', {
+                    schema: {
+                      speed: {type: 'number', default: 1}
+                    },
+                    tick: function (time, timeDelta) {
+                      this.el.object3D.rotation.y += this.data.speed * timeDelta / 1000;
+                    }
+                  });
+        
+                  // Adiciona o componente de rotação ao modelo
+                  document.querySelector('#rotating-model').setAttribute('rotate', 'speed: 0.1');
+                </script>
+            </a-scene>
+        </body>
+        </html>
