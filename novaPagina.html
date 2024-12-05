@@ -31,9 +31,8 @@
         <a-sky color="black"></a-sky>
         
         <!-- Modelo 3D Giratório -->
-         
         <a-entity id="rotating-model" 
-                  obj-model="obj: url(download/Tektõn%203D.obj)" 
+                  obj-model="obj: url(download/Tektõn%203D.obj); mtl: url(download/materials.mtl)"
                   position="0 -1 -5"
                   scale="0.1 0.1 0.1">
         </a-entity>
@@ -48,7 +47,8 @@
   
                 model.object3D.rotation.y += 0.01;
             };
-            rotateModel();        </script>
+            rotateModel();        
+        </script>
     </a-scene>
 </body>
 </html>
