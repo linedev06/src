@@ -27,25 +27,34 @@
 </head>
 <body>
     <a-scene>
-
+        <!-- Ambiente VR -->
         <a-sky color="black"></a-sky>
         
- 
+        <!-- Modelo 3D Giratório -->
         <a-entity id="rotating-model" 
                   obj-model="obj: url(download/Tektõn%203D.obj); mtl: url(download/materials.mtl)"
                   position="0 0 -50"
                   scale="0.1 0.1 0.1">
         </a-entity>
 
-        <a-camera position="0 90 400" look-controls="pointerLockEnabled: true; touchEnabled: true;"></a-camera>
+        <!-- Câmera para VR -->
+        <a-entity camera position="0 90 400" look-controls="pointerLockEnabled: true; touchEnabled: true;" id="camera"></a-entity>
 
         <script>
             var model = document.querySelector('#rotating-model');
+            var camera = document.querySelector('#camera');
+            
+            // Função para girar o modelo
             var rotateModel = function () {
                 requestAnimationFrame(rotateModel);
                 model.object3D.rotation.y += 0.01;
             };
-            rotateModel();        
+            rotateModel();
+            
+            // Função para garantir que a câmera permaneça no alto
+            camera.addEventListener('enter-vr', function () {
+                camera.setAttribute('position', '0 90 400');
+            });
         </script>
     </a-scene>
 </body>
